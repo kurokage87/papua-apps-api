@@ -61,18 +61,20 @@ class ApiController extends Controller {
 
         if (empty($model->login())) {
             return [
-                'result' => false,
-                'raw' => 'Username atau Password salah'];
+                'Result' => False,
+                'Raw' => 'Username atau Password salah'];
         } else {
             return [
-                'result' => true,
-                'raw' => [
-                    'user' => Yii::$app->user->identity->username,
-                    'password' => $model->password,
-                    'nama' => Yii::$app->user->identity->nama,
+                'Result' => True,
+                'Raw' => array(
+                    [
+                    'UserName' => Yii::$app->user->identity->username,
+                    'Password' => $model->password,
+                    'Nama' => Yii::$app->user->identity->nama,
                     //'pass' => \Yii::$app->getSecurity()->decryptByPassword(\Yii::$app->user->identity->password_hash),
-                    'email' => Yii::$app->user->identity->email,
-                ]
+                    'Email' => Yii::$app->user->identity->email,
+                    ]
+                )
             ];
         }
     }
