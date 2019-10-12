@@ -526,14 +526,19 @@ class ApiController extends Controller {
     }
 
     public function actionQueryTotalUang($id) {
-        $model = (new \yii\db\Query())
-                ->select('SUM(ct.cost) as Total')
-                ->from('cost_task ct')
-                ->leftJoin('task t', 't.id = ct.task_id')
-                ->where(['ct.status_cost' => 'diberikan'])
-                ->andWhere(['ct.task_id' => $id])
-                ->all();
-
+//        $model = (new \yii\db\Query())
+//                ->select('IFNULL(SUM(ct.cost),0) as Total')
+//                ->from('cost_task ct')
+//                ->leftJoin('task t', 't.id = ct.task_id')
+//                ->leftJoin('user u', 'u.id = t.id')
+//                ->where(['ct.status_cost' => 'diberikan'])
+//                ->andWhere(['u.nik' => $id])
+//                ->all();
+        $model = \Yii::$app->db->createCommand('SELECT IFNULL(SUM(ct.cost), 0) as total FROM `cost_task` ct
+                    LEFT JOIN task t on t.id = ct.task_id
+                    left JOIN user u on u.id = t.user_id
+                    WHERE ct.status_cost = "diberikan" and u.nik = "'.$id.'"')->queryAll();
+//        \yii\helpers\VarDumper::dump($model);die;
         $respon = \Yii::$app->getResponse();
         if ($model != null) {
             $respon->setStatusCode(200);
@@ -545,15 +550,18 @@ class ApiController extends Controller {
     }
 
     public function actionQueryTotalApprove($nik) {
-        $model = (new \yii\db\Query())
-                ->select('ct.cost, ct.keterangan')
-                ->from('cost_task ct')
-                ->leftJoin('task t', 'ct.task_id = t.id')
-                ->leftJoin('user u', 't.user_id = u.id')
-                ->where(['u.nik' => $nik])
-                ->andWhere(['ct.status_cost' => 'persetujuan'])
-                ->all();
-
+//        $model = (new \yii\db\Query())
+//                ->select('SUM(ct.cost) as total')
+//                ->from('cost_task ct')
+//                ->leftJoin('task t', 'ct.task_id = t.id')
+//                ->leftJoin('user u', 't.user_id = u.id')
+//                ->where(['u.nik' => $nik])
+//                ->andWhere(['ct.status_cost' => 'persetujuan'])
+//                ->all();
+        $model = \Yii::$app->db->createCommand('Select IFNULL(SUM(ct.cost), 0)as total from cost_task ct '
+                . 'LEFT JOIN task t on t.id = ct.task_id '
+                . 'LEFT JOIN user u on u.id = t.user_id '
+                . 'where ct.status_cost = "persetujuan" and u.nik = "'.$nik.'"')->queryAll();
         $respon = Yii::$app->getResponse();
         if ($model != null) {
             $respon->setStatusCode(200);
@@ -571,15 +579,19 @@ class ApiController extends Controller {
     }
 
     public function actionQueryTotalPengguna($nik) {
-        $model = (new \yii\db\Query())
-                ->select('ct.cost, ct.keterangan')
-                ->from('cost_task ct')
-                ->leftJoin('task t', 'ct.task_id = t.id')
-                ->leftJoin('user u', 't.user_id = u.id')
-                ->where(['u.nik' => $nik])
-                ->andWhere(['ct.status_cost' => 'digunakan'])
-                ->all();
-
+//        $model = (new \yii\db\Query())
+//                ->select('ct.cost, ct.keterangan')
+//                ->from('cost_task ct')
+//                ->leftJoin('task t', 'ct.task_id = t.id')
+//                ->leftJoin('user u', 't.user_id = u.id')
+//                ->where(['u.nik' => $nik])
+//                ->andWhere(['ct.status_cost' => 'digunakan'])
+//                ->all();
+        
+        $model = \Yii::$app->db->createCommand('SELECT IFNULL(SUM(ct.cost_task),0) as total from cost_task ct'
+                . 'left join task t on ct.task_id = t.id'
+                . 'left join user u on u.id = t.user_id'
+                . 'where ct.status_cost = "digunakan" and u.nik = "'.$nik.'"')->queryAll();
         $respon = Yii::$app->getResponse();
         if ($model != null) {
             $respon->setStatusCode(200);
