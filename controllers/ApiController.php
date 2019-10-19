@@ -369,14 +369,16 @@ class ApiController extends Controller {
                 ->andWhere(['u.nama' => $name])
                 ->andWhere(['LIKE', 't.status_task', 'open'])
                 ->all();
-//            \yii\helpers\VarDumper::dump($model);die;
+//            \yii\helpers\VarDumper::dump($model[0]['ID']);die;
 
         $respon = \Yii::$app->getResponse();
         if ($model != null) {
             $respon->setStatusCode(200);
             return [
                 'Result' => "True",
-                'Raw' => $model
+                'Raw' => array(
+                    "ID" => $model
+                )
             ];
         } else {
             $respon->setStatusCode(200);
@@ -525,7 +527,7 @@ class ApiController extends Controller {
         }
     }
 
-    public function actionQueryTotalUang($id) {
+    public function actionQueryTotalUang($nik) {
 //        $model = (new \yii\db\Query())
 //                ->select('IFNULL(SUM(ct.cost),0) as Total')
 //                ->from('cost_task ct')
@@ -537,7 +539,7 @@ class ApiController extends Controller {
         $model = \Yii::$app->db->createCommand('SELECT IFNULL(SUM(ct.cost), 0) as total FROM `cost_task` ct
                     LEFT JOIN task t on t.id = ct.task_id
                     left JOIN user u on u.id = t.user_id
-                    WHERE ct.status_cost = "diberikan" and u.nik = "'.$id.'"')->queryAll();
+                    WHERE ct.status_cost = "diberikan" and u.nik = "'.$nik.'"')->queryAll();
 //        \yii\helpers\VarDumper::dump($model);die;
         $respon = \Yii::$app->getResponse();
         if ($model != null) {
@@ -588,10 +590,10 @@ class ApiController extends Controller {
 //                ->andWhere(['ct.status_cost' => 'digunakan'])
 //                ->all();
         
-        $model = \Yii::$app->db->createCommand("SELECT IFNULL(SUM(ct.cost),0) as total from cost_task ct "
-                . "left join task t on ct.task_id = t.id "
-                . "left join user u on u.id = t.user_id "
-                . "where ct.status_cost = 'digunakan' and u.nik = '".$nik."'")->queryAll();
+            $model = \Yii::$app->db->createCommand("SELECT IFNULL(SUM(ct.cost),0) as totalsuk from cost_task ct "
+                    . "left join task t on ct.task_id = t.id "
+                    . "left join user u on u.id = t.user_id "
+                    . "where ct.status_cost = 'digunakan' and u.nik = '".$nik."'")->queryAll();
         $respon = Yii::$app->getResponse();
         if ($model != null) {
             $respon->setStatusCode(200);
@@ -621,7 +623,7 @@ class ApiController extends Controller {
                 ->where(['u.nik' => $nik])
                 ->all();
         
-        \yii\helpers\VarDumper::dump($model[0]);die;
+//        \yii\helpers\VarDumper::dump($model[0]);die;
         $respon = Yii::$app->getResponse();
         if ($model != null) {
             $respon->setStatusCode(200);
@@ -648,18 +650,53 @@ class ApiController extends Controller {
 //                    LEFT JOIN task t on t.id = s.task_id
 //                    left JOIN user u on u.id = t.user_id
 //                    WHERE u.nik = '".$nik."' and s.status_spd = 'spd'")->queryAll();
-        $model = \Yii::$app->db->createCommand("SELECT s.file_url, s.description as Description, t.vid as VID, t.no_task as NoTask, s.catatan_transaksi as CatatanTransaksi, 
-                            jb.nama_jenis_biaya as JenisBiaya,s.tgl_input_biaya as TgnInputBiaya, s.sisa, t.vid, (
-                        	SELECT IFNULL(SUM(ct.cost),0) FROM cost_task ct
-                                LEFT JOIN task t on t.id = ct.task_id
-                                LEFT JOIN user u on u.id = t.user_id
-                                    WHERE u.nik = '".$nik."'  and ct.status_cost = 'digunakan'
-                        ) as TotalPengeluaran
+//        $model = \Yii::$app->db->createCommand("SELECT s.file_url, s.description as Description, t.vid as VID, t.no_task as NoTask, s.catatan_transaksi as CatatanTransaksi, 
+//                            jb.nama_jenis_biaya as JenisBiaya,s.tgl_input_biaya as TgnInputBiaya, s.sisa, t.vid, (
+//                        	SELECT IFNULL(SUM(ct.cost),0) FROM cost_task ct
+//                                LEFT JOIN task t on t.id = ct.task_id
+//                                LEFT JOIN user u on u.id = t.user_id
+//                                    WHERE u.nik = '".$nik."'  and ct.status_cost = 'digunakan'
+//                        ) as TotalPengeluaran
+//from spd s
+//LEFT JOIN task t on t.id = s.task_id
+//LEFT JOIN user u on u.id = t.user_id
+//LEFT JOIN jenis_biaya jb on jb.id = s.jenis_biaya_id
+//WHERE u.nik = '".$nik."' and s.status_spd = 'spd-vid'")->query();
+        
+        $model = Yii::$app->db->createCommand("SELECT t.no_task as NoTask, t.nama_remote as NamaTask, u.nama as NamaTeknisi, dt.id as IdTeknisi, dt.type_teknisi as TypeTeknisi, t.tanggal_task as TanggalTask, (
+SELECT IFNULL(SUM(ct.cost), 0) as total FROM `cost_task` ct
+                    LEFT JOIN task t on t.id = ct.task_id
+                    left JOIN user u on u.id = t.user_id
+                    WHERE ct.status_cost = 'diberikan' and u.nik = '".$nik."'
+) as total,
+(
+Select IFNULL(SUM(ct.cost), 0)as total from cost_task ct
+                LEFT JOIN task t on t.id = ct.task_id
+                LEFT JOIN user u on u.id = t.user_id
+                where ct.status_cost = 'persetujuan' and u.nik = '".$nik."'
+) as approve,
+(
+SELECT IFNULL(SUM(ct.cost),0) as totalsuk from cost_task ct
+                left join task t on ct.task_id = t.id
+                left join user u on u.id = t.user_id
+                where ct.status_cost = 'digunakan' and u.nik = '".$nik."'
+) as totalsuk,
+(
+   (SELECT IFNULL(SUM(ct.cost), 0) as total FROM `cost_task` ct
+                    LEFT JOIN task t on t.id = ct.task_id
+                    left JOIN user u on u.id = t.user_id
+                    WHERE ct.status_cost = 'diberikan' and u.nik = '".$nik."') - 
+    (Select IFNULL(SUM(ct.cost), 0)as total from cost_task ct
+                LEFT JOIN task t on t.id = ct.task_id
+                LEFT JOIN user u on u.id = t.user_id
+                where ct.status_cost = 'persetujuan' and u.nik = '".$nik."')
+) as sisa
 from spd s
-LEFT JOIN task t on t.id = s.task_id
+LEFT JOIN task t on s.task_id = t.id
 LEFT JOIN user u on u.id = t.user_id
-LEFT JOIN jenis_biaya jb on jb.id = s.jenis_biaya_id
-WHERE u.nik = '".$nik."' and s.status_spd = 'spd-vid'")->query();
+LEFT JOIN data_teknisi dt on dt.task_id = t.id
+WHERE u.nik = '".$nik."'")->queryAll();
+//        \yii\helpers\VarDumper::dump($model);die;
         $respon = \Yii::$app->getResponse();
 
         if ($model != null) {
