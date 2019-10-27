@@ -376,9 +376,8 @@ class ApiController extends Controller {
             $respon->setStatusCode(200);
             return [
                 'Result' => "True",
-                'Raw' => array(
-                    "ID" => $model
-                )
+                'Raw' => 
+                    $model
             ];
         } else {
             $respon->setStatusCode(200);
@@ -520,6 +519,7 @@ class ApiController extends Controller {
                 'Raw' => $model
             ];
         } else {
+            $respon->setStatusCode(200);
             return [
                 'Result' => "False",
                 'Data1' => ''
@@ -581,14 +581,7 @@ class ApiController extends Controller {
     }
 
     public function actionQueryTotalPengguna($nik) {
-//        $model = (new \yii\db\Query())
-//                ->select('ct.cost, ct.keterangan')
-//                ->from('cost_task ct')
-//                ->leftJoin('task t', 'ct.task_id = t.id')
-//                ->leftJoin('user u', 't.user_id = u.id')
-//                ->where(['u.nik' => $nik])
-//                ->andWhere(['ct.status_cost' => 'digunakan'])
-//                ->all();
+//         
         
             $model = \Yii::$app->db->createCommand("SELECT IFNULL(SUM(ct.cost),0) as totalsuk from cost_task ct "
                     . "left join task t on ct.task_id = t.id "
