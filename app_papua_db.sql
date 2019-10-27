@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2019 at 09:17 AM
+-- Generation Time: Oct 27, 2019 at 10:43 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -374,10 +374,10 @@ CREATE TABLE `spd` (
 --
 
 INSERT INTO `spd` (`id`, `flagconfirm`, `id_alamat`, `file_url`, `description`, `task_id`, `catatan_transaksi`, `jenis_biaya_id`, `nominal`, `tgl_input_biaya`, `sisa`, `status_spd`, `flagtime`, `flagupload`, `file_usercreate`, `file_datecreate`, `keterangan`, `yout_image_64_name`, `your_image_64_file`, `iplan`, `cacatan_transaksi`) VALUES
-(1, 'ID=\'idPenguna\'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'SPD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
-(3, 'asdsad', '1', NULL, NULL, 4, 'asd', 2, 113213, NULL, NULL, 'SPD', NULL, NULL, NULL, NULL, 'asdasd', NULL, NULL, '202.134.0.155', 'asdasd'),
-(4, 'ID=\'idPenguna\'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'SPD-VID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
-(5, 'asdsad', '1', NULL, NULL, 4, 'asd', 2, 113213, NULL, NULL, 'SPD-VID', NULL, NULL, NULL, NULL, 'asdasd', NULL, NULL, '202.134.0.155', 'asdasd');
+(1, 'true', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'SPD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(3, 'false', '1', NULL, NULL, 4, 'asd', 2, 113213, NULL, NULL, 'SPD', NULL, NULL, NULL, NULL, 'asdasd', NULL, NULL, '202.134.0.155', 'asdasd'),
+(4, 'true', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'SPD-VID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(5, 'true', '1', NULL, NULL, 4, 'asd', 2, 113213, NULL, NULL, 'SPD-VID', NULL, NULL, NULL, NULL, 'asdasd', NULL, NULL, '202.134.0.155', 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -432,16 +432,17 @@ CREATE TABLE `task` (
   `no_stamp` varchar(255) DEFAULT NULL,
   `date_stamp` varchar(100) NOT NULL,
   `date_update` varchar(255) DEFAULT NULL,
-  `user_update` varchar(255) DEFAULT NULL
+  `user_update` varchar(255) DEFAULT NULL,
+  `nama_task` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`id`, `nama_remote`, `alamat`, `no_task`, `vid`, `tanggal_task`, `provinsi`, `id_jenis_task`, `nama_kordinator`, `user_id`, `status_task`, `status_perbaikan`, `no_stamp`, `date_stamp`, `date_update`, `user_update`) VALUES
-(4, 'asdsa', 'ASDASD', '1', 1, NULL, 'ASDADS', 1, 'asdadsd', 1, 'finish', 'asdasd', NULL, '', NULL, NULL),
-(5, 'ASNW', 'asdasdasdasd', '111111', 1, NULL, NULL, 1, 'asdasdasdad', 1, 'open', 'open', '1', '', NULL, NULL);
+INSERT INTO `task` (`id`, `nama_remote`, `alamat`, `no_task`, `vid`, `tanggal_task`, `provinsi`, `id_jenis_task`, `nama_kordinator`, `user_id`, `status_task`, `status_perbaikan`, `no_stamp`, `date_stamp`, `date_update`, `user_update`, `nama_task`) VALUES
+(4, 'asdsa', 'ASDASD', '1', 1, NULL, 'ASDADS', 1, 'asdadsd', 1, 'finish', 'asdasd', NULL, '', NULL, NULL, 'Asdf'),
+(5, 'ASNW', 'asdasdasdasd', '111111', 1, NULL, NULL, 1, 'asdasdasdad', 1, 'open', 'open', '1', '', NULL, NULL, 'Adududud');
 
 -- --------------------------------------------------------
 

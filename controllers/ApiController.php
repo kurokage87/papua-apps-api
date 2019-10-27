@@ -519,7 +519,7 @@ LEFT JOIN survey s on s.task_id = t.id
 LEFT JOIN foto f on f.task_id = t.id
 LEFT JOIN detail_task dtsk ON dtsk.task_id = t.id
 LEFT JOIN user u on u.id = t.user_id
-WHERE l.task_id = t.id and t.id = ".$id." and u.nik = '".$nik."'")->queryAll();
+WHERE l.task_id = t.id and t.id = " . $id . " and u.nik = '" . $nik . "'")->queryAll();
 //        \yii\helpers\VarDumper::dump($model);die;
         $respon = \Yii::$app->getResponse();
 
@@ -667,7 +667,7 @@ WHERE l.task_id = t.id and t.id = ".$id." and u.nik = '".$nik."'")->queryAll();
 //LEFT JOIN jenis_biaya jb on jb.id = s.jenis_biaya_id
 //WHERE u.nik = '".$nik."' and s.status_spd = 'spd-vid'")->query();
 
-        $model = Yii::$app->db->createCommand("SELECT t.no_task as NoTask, t.nama_remote as NamaTask, u.nama as NamaTeknisi, dt.id as IdTeknisi, dt.type_teknisi as TypeTeknisi, t.tanggal_task as TanggalTask, (
+        $model = Yii::$app->db->createCommand("SELECT t.no_task as NoTask, t.nama_task as NamaTask, u.nama as NamaTeknisi, dt.id as IdTeknisi, dt.type_teknisi as TypeTeknisi, t.tanggal_task as TanggalTask, (
 SELECT IFNULL(SUM(ct.cost), 0) as total FROM `cost_task` ct
                     LEFT JOIN task t on t.id = ct.task_id
                     left JOIN user u on u.id = t.user_id
@@ -817,11 +817,12 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 //                ->andWhere(['t.vid' => $vid])
 //                ->andWhere(['s.status_spd' => 'spd-vid'])
 //                ->all();
-        $model = Yii::$app->db->createCommand("SELECT IFNULL(s.flagconfirm, 'false') as flagconfirm, t.no_task as NoTask, t.vid as VID, t.nama_remote as NAMAREMOTE, s.iplan as IPLAN, t.alamat as ALAMAT FROM spd s
-LEFT JOIN task t on t.id = s.task_id
-LEFT JOIN user u on u.id = t.user_id
+        $model = Yii::$app->db->createCommand("SELECT IFNULL(s.flagconfirm, 'false') as flagconfirm, t.no_task as NoTask, t.vid as VID, t.nama_remote as NAMAREMOTE, s.iplan as IPLAN, t.alamat as ALAMAT, IFNULL(f.flag_upload_foto, 'false') as flagupload, t.nama_task as NamaTask FROM spd s 
+                LEFT JOIN task t on t.id = s.task_id
+                LEFT JOIN user u on u.id = t.user_id
+                LEFT JOIN foto f on f.task_id = t.id
 
-WHERE u.nik = '".$nik."' and t.no_task = ".$noTask." and t.vid = ".$vid." and s.status_spd = 'SPD-VID'")->queryAll();
+                WHERE u.nik = '" . $nik . "' and t.no_task = " . $noTask . " and t.vid = " . $vid . " and s.status_spd = 'SPD-VID'")->queryAll();
 
         $respon = \Yii::$app->getResponse();
 
