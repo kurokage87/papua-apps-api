@@ -509,7 +509,7 @@ class ApiController extends Controller {
 //                ->leftJoin('task t', 'dt.task_id = t.id')
 //                ->where(['t.id' => $id])
 //                ->all();
-        $model = Yii::$app->db->createCommand("SELECT IFNULL(l.flag_data_lokasi, 'false') as FlagDataLokasi, IFNULL(gi.flag_general_info, 'false') as FlagGeneralInfo, IFNULL(dt.flag_data_teknis, 'false') as FlagDataTeknis, IFNULL(s.flag_data_survey, 'false') as FlagDataSurvey, IFNULL(f.flag_upload_foto, 'false') as FlagUploadFoto, IFNULL(dtsk.flag_data_instalasi, 'false') as FlagDataInstalasi, IFNULL(b.flag_data_barang, 'false') as FlagDataBarang, t.id_jenis_task as idJenisTask1, dtsk.id_status_perbaikan as idStatusPerbaikan, l.alamat_sekarang as alamatSekarang, t.vid as VID1, t.nama_remote as NAMAREMOTE, l.alamat_install as ALAMAT, l.kanwil as KANWIL, l.kanca_induk as KANCAINDUK, l.nama_pic as NoHpPic, l.no_hp_pic as PIC 
+        $model = Yii::$app->db->createCommand("SELECT IFNULL(l.flag_data_lokasi, 'false') as FlagDataLokasi, IFNULL(gi.flag_general_info, 'false') as FlagGeneralInfo, IFNULL(dt.flag_data_teknis, 'false') as FlagDataTeknis, IFNULL(s.flag_data_survey, 'false') as FlagDataSurvey, IFNULL(f.flag_upload_foto, 'false') as FlagUploadFoto, IFNULL(dtsk.flag_data_instalasi, 'false') as FlagDataInstalasi, IFNULL(b.flag_data_barang, 'false') as FlagDataBarang, t.id_jenis_task as idJenisTask1, dtsk.id_status_perbaikan as idStatusPerbaikan, l.alamat_sekarang as alamatSekarang, t.vid as VID1, t.nama_remote as NAMAREMOTE, l.alamat_install as ALAMAT, l.kanwil as KANWIL, l.kanca_induk as KANCAINDUK, l.nama_pic as NoHpPic, l.no_hp_pic as PIC, l.kota as KOTA, l.jarkom_id as IdJarkom, l.satelite_id as IdSatelite, l.latitude as Latitude, l.longitude as Longitude, t.no_task as NoTask, l.catatan as Catatan, l.hub as Hub
 FROM lokasi l
 LEFT JOIN task t on t.id = l.task_id
 LEFT JOIN barang b on b.task_id = t.id
@@ -808,15 +808,20 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
         }
     }
 
-    public function actionGetSpdVid($vid, $noTask) {
-        $model = (new \yii\db\Query())
-                ->select('s.flagconfirm, t.nama_task as NamaTask, t.no_task as NoTask, t.nama_remote as NAMAREMOTE, t.vid as VID, s.iplan as IPLAN, t.alamat as ALAMAT')
-                ->from('spd s')
-                ->leftJoin('task t', 's.task_id = t.id')
-                ->where(['t.no_task' => $noTask])
-                ->andWhere(['t.vid' => $vid])
-                ->andWhere(['s.status_spd' => 'spd-vid'])
-                ->all();
+    public function actionGetSpdVid($vid, $noTask, $nik) {
+//        $model = (new \yii\db\Query())
+//                ->select('s.flagconfirm, t.nama_task as NamaTask, t.no_task as NoTask, t.nama_remote as NAMAREMOTE, t.vid as VID, s.iplan as IPLAN, t.alamat as ALAMAT')
+//                ->from('spd s')
+//                ->leftJoin('task t', 's.task_id = t.id')
+//                ->where(['t.no_task' => $noTask])
+//                ->andWhere(['t.vid' => $vid])
+//                ->andWhere(['s.status_spd' => 'spd-vid'])
+//                ->all();
+        $model = Yii::$app->db->createCommand("SELECT IFNULL(s.flagconfirm, 'false') as flagconfirm, t.no_task as NoTask, t.vid as VID, t.nama_remote as NAMAREMOTE, s.iplan as IPLAN, t.alamat as ALAMAT FROM spd s
+LEFT JOIN task t on t.id = s.task_id
+LEFT JOIN user u on u.id = t.user_id
+
+WHERE u.nik = '".$nik."' and t.no_task = ".$noTask." and t.vid = ".$vid." and s.status_spd = 'SPD-VID'")->queryAll();
 
         $respon = \Yii::$app->getResponse();
 
