@@ -710,7 +710,7 @@ WHERE u.nik = '".$nik."'")->queryAll();
     public function actionQueryTaskVid($noTask) {
         $model = (new \yii\db\Query())
                 ->select('s.flagconfirm, s.id_alamat as ID, s.file_url, s.description as Description, t.vid as VID, t.no_task as NoTask, s.catatan_transaksi as CatatanTransaksi, 
-                            jb.nama_jenis_biaya as JenisBiaya,s.tgl_input_biaya as TgnInputBiaya, s.sisa, t.vid, (
+                            jb.nama_jenis_biaya as JenisBiaya,s.tgl_input_biaya as TgnInputBiaya, s.sisa, t.vid, s.iplan as IPLAN,t.nama_remote as NAMAREMOTE, (
                         	SELECT SUM(ct.cost) FROM cost_task ct
                                 LEFT JOIN task t on ct.task_id = t.id
                                     WHERE ct.task_id = (
