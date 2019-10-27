@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 11, 2019 at 04:49 AM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 5.6.40
+-- Generation Time: Oct 27, 2019 at 09:17 AM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,8 +40,8 @@ CREATE TABLE `barang` (
   `file_url` varchar(255) DEFAULT NULL,
   `file_user_create` varchar(255) DEFAULT NULL,
   `file_date_create` varchar(100) DEFAULT NULL,
-  `description` text,
-  `keterangan` text,
+  `description` text DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
   `date_create` varchar(255) DEFAULT NULL,
   `user_create` varchar(255) DEFAULT NULL,
   `jenis_barang` varchar(255) DEFAULT NULL,
@@ -53,13 +53,7 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id`, `task_id`, `nama_barang`, `type`, `SN`, `iplan`, `esnmodem`, `status`, `file_url`, `file_user_create`, `file_date_create`, `description`, `keterangan`, `date_create`, `user_create`, `jenis_barang`, `flag_data_barang`) VALUES
-(1, 1, 'asdasd', 'asdas', 'asdasd', '', 'asdasd', 'rusak', 'asdasdas', NULL, NULL, 'asdasd', NULL, '2010-11-25', 'asdasd', 'asdasdasd', NULL),
-(2, 2, 'asdas', 'asdasd', 'asdas', '', 'asdasd', 'terpasang', 'asdasd', NULL, NULL, 'asdasdasd', NULL, '2018-10-10', 'asdasd', 'aasdasd', NULL),
-(3, 1, 'asdasd', 'asdas', 'asdasd', '', 'asdasd', 'terpasang', 'asdasdas', NULL, NULL, 'asdasd', NULL, '2010-11-25', 'asdasd', 'asdasdasd', NULL),
-(4, 2, 'asdas', 'asdasd', 'asdas', '', 'asdasd', 'terpasang', 'asdasd', NULL, NULL, 'asdasdasd', NULL, '2018-10-10', 'asdasd', 'aasdasd', NULL),
-(5, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, 1, 'Router', 'Ex', '11225847', '202.134.0.155', NULL, 'asd', 'D:/xampp/htdocs/api/web/upload/Lala.jpg', 'admin', '2018-10-11', 'apa aja', 'asdf', '2018-10-11', 'BRISAT', NULL, 'abc'),
-(7, 1, 'Router', 'Ex', '11225847', '202.134.0.155', NULL, 'asd', 'D:/xampp/htdocs/api/web/upload/Lala.jpg', 'admin', '2018-10-11', 'apa aja', 'asdf', '2018-10-11', 'BRISAT', 'Rusak', 'abc');
+(5, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -74,6 +68,16 @@ CREATE TABLE `cost_task` (
   `status_cost` varchar(50) DEFAULT NULL,
   `task_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cost_task`
+--
+
+INSERT INTO `cost_task` (`id`, `cost`, `keterangan`, `status_cost`, `task_id`) VALUES
+(7, 32321, 'sdfsdf', 'diberikan', 4),
+(8, 12, 'sdfsdf', 'digunakan', 4),
+(9, 32321, 'sdfsdf', 'persetujuan', 4),
+(10, 12, 'sdfsdf', 'digunakan', 4);
 
 -- --------------------------------------------------------
 
@@ -103,16 +107,17 @@ CREATE TABLE `data_teknisi` (
   `kondisi_bangunan` varchar(255) DEFAULT NULL,
   `analisa_problem` varchar(255) DEFAULT NULL,
   `aktifitas_solusi` varchar(255) DEFAULT NULL,
-  `flag_data_teknis` varchar(255) DEFAULT NULL
+  `flag_data_teknis` varchar(255) DEFAULT NULL,
+  `type_teknisi` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `data_teknisi`
 --
 
-INSERT INTO `data_teknisi` (`id`, `task_id`, `fail_hw`, `sqf`, `initial_esno`, `carrier_to_noice`, `hasil_xpoll`, `cpi`, `operator_satelite`, `operator_helpdesk`, `out_pln`, `out_ups`, `ups_for_backup`, `suhu_ruangan`, `type_mounting`, `panjang_kabel`, `letak_antena`, `letak_modem`, `kondisi_bangunan`, `analisa_problem`, `aktifitas_solusi`, `flag_data_teknis`) VALUES
-(1, 1, 'po1', 'pop', 'asdasd', 'vzcx', 'hhjh', 'xcvxcv', 'fgghfgh', 'aasdad', 'asdfsdxcv', 'xcvxcv', 'zxczxczxc', 'zsasdasd', 'asdadsasd', 'kpokpo', 'asdasdas', 'asdasdasd', 'jkaskjasdk', 'popiopnkalks', 'asmnasm', 'alsndlasdla'),
-(2, 2, 'rtyrty', 'rtyrtyrty', 'dfgdfg', 'xcvxcv', 'sdfdsdfa', 'xcvdfb', 'dfgsdfsg', 'hjgkgkhjlg', 'fghxhx', 'fxbcvdr', 'sreytysgh', 'shsghsgfg', 'xdfhx', 'dxser', 'sfgserg', 'asdasdasd', 'sregsrg', 'sgser', 'gsergser', 'sergaerg');
+INSERT INTO `data_teknisi` (`id`, `task_id`, `fail_hw`, `sqf`, `initial_esno`, `carrier_to_noice`, `hasil_xpoll`, `cpi`, `operator_satelite`, `operator_helpdesk`, `out_pln`, `out_ups`, `ups_for_backup`, `suhu_ruangan`, `type_mounting`, `panjang_kabel`, `letak_antena`, `letak_modem`, `kondisi_bangunan`, `analisa_problem`, `aktifitas_solusi`, `flag_data_teknis`, `type_teknisi`) VALUES
+(3, 4, '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', 'true', 'alpha'),
+(4, 5, '13', '1313', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', 'true', 'beta');
 
 -- --------------------------------------------------------
 
@@ -124,7 +129,7 @@ CREATE TABLE `detail_task` (
   `id` int(11) NOT NULL,
   `task_id` int(11) DEFAULT NULL,
   `id_status_perbaikan` int(11) DEFAULT NULL,
-  `flag_data_instalasi` int(11) DEFAULT NULL,
+  `flag_data_instalasi` varchar(10) DEFAULT NULL,
   `diameter_antena` varchar(255) DEFAULT NULL,
   `polarisasi_arah_antena` varchar(255) DEFAULT NULL,
   `elevasi_arah_antena` varchar(255) DEFAULT NULL,
@@ -169,8 +174,8 @@ CREATE TABLE `detail_task` (
 --
 
 INSERT INTO `detail_task` (`id`, `task_id`, `id_status_perbaikan`, `flag_data_instalasi`, `diameter_antena`, `polarisasi_arah_antena`, `elevasi_arah_antena`, `azimuth_arah_antena`, `source_listrik`, `kabel_roll`, `perangkat_ke_ups`, `kvaups`, `frequency_band_modulation`, `ip_management`, `receive_symbole_rate`, `phase_netral_pln`, `phase_netral_ups`, `phase_netral_genset`, `phase_ground_pln`, `phase_ground_ups`, `phase_ground_genset`, `netral_ground_pln`, `netral_ground_ups`, `netral_ground_genset`, `satelite_longitude`, `iplan1`, `subnetmask1`, `iplan2`, `subnetmask2`, `hasil_test_alamat1`, `success_test1`, `loss_test1`, `keterangan_test1`, `hasil_test_alamat2`, `success_test2`, `loss_test2`, `keterangan_test2`, `hasil_test_alamat3`, `success_test3`, `loss_test3`, `keterangan_test3`) VALUES
-(1, 1, 3, 1, '+diameterAntena+', '+polarisasi+', '+elevasi+', '+azimuth+', '+spinnerSourceListrik+', '+spinnerKabelRoll+', '+spinnerUps+', '+kva+', '+spinnerModulation+', '+managementIP+', '+symboleRate+', '+pln1+', '+ups1+', '+genset1+', '+pln2+', '+ups2+', '+genset2+', '+pln3+', '+ups3+', '+genset3+', '+sateliteLongitude+', '+ipLan1+', '+subnetMask1+', '+ipLan2+', '+subnetMask2+', '+alamat1+', '+success1+', '+loss1+', '+keterangan1+', '+alamat2+', '+success2+', '+loss1+', '+keterangan2+', '+alamat3+', '+success3+', '+loss1+', '+keterangan3+'),
-(2, 2, 2, 1, 'q', 'q', 'w', 'w', NULL, '', '', 'w', NULL, 'w', 'e', 'r', 'r', 'w', 'w', 'w', 'e', 'e', 'e', 'e', 'e', 'eff', 'f', 'f', 'f', 'd', 'd', 'xs', 'asdas', 'x', 'asdasd', 'asdasaasdasd', 'asdasd', 'asdasdasd', 'asdasda', 'sdvd', 'dssd');
+(3, 5, 1, 'true', '10', '10', '10', '10', '10', '10', '10', '10', '10', '10.22.24.116', 'X', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '10.2.24.4', '255.255.0.0', '10.23.23.21', '255.0.0.0', 'Sukses bos', 'Sukses bos', 'Gk ada', 'Gk Ada', 'Sukses bos', 'Sukses bos', 'gk ada', 'gk ada', 'Sukses bos', 'Sukses bos', 'gk ada', 'gk ada\r\n'),
+(4, 4, 1, 'false', '10', '10', '10', '10', '10', '10', '10', '10', '10', '10.22.24.116', 'X', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '10.2.24.4', '255.255.0.0', '10.23.23.21', '255.0.0.0', 'Sukses bos', 'Sukses bos', 'Gk ada', 'Gk Ada', 'Sukses bos', 'Sukses bos', 'gk ada', 'gk ada', 'Sukses bos', 'Sukses bos', 'gk ada', 'gk ada\r\n');
 
 -- --------------------------------------------------------
 
@@ -182,24 +187,14 @@ CREATE TABLE `foto` (
   `id` int(11) NOT NULL,
   `task_id` int(11) DEFAULT NULL,
   `file_url` varchar(255) DEFAULT NULL,
-  `keterangan` text,
+  `keterangan` text DEFAULT NULL,
   `flag_upload_foto` varchar(255) DEFAULT NULL,
   `file_usercreate` varchar(255) DEFAULT NULL,
   `flagtime` varchar(255) DEFAULT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `your_image_64_name` varchar(255) DEFAULT NULL,
-  `your_image_64_file` text
+  `your_image_64_file` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `foto`
---
-
-INSERT INTO `foto` (`id`, `task_id`, `file_url`, `keterangan`, `flag_upload_foto`, `file_usercreate`, `flagtime`, `description`, `your_image_64_name`, `your_image_64_file`) VALUES
-(1, 1, 'asdas', 'asdasd', 'asdasd', 'asdasd', 'asdasd', 'asdasd', 'asdasd', 'asdasd'),
-(2, 2, 'asdasd', 'asdasd', 'asdas', 'dasda', 'asdasd', 'asdasdad', 'fsdfsdf', 'sdfsdf'),
-(3, 1, 'D:/xampp/htdocs/api/web/upload/upload foto2.jpg', '+keterangan+', '+statusUp+', 'Bedu', '+time+', '+descrip+', NULL, NULL),
-(4, 1, 'D:/xampp/htdocs/api/web/upload/upload foto.jpg', '+keterangan+', '+statusUp+', 'admin', '+time+', '+descrip+', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -226,8 +221,7 @@ CREATE TABLE `general_info` (
 --
 
 INSERT INTO `general_info` (`id`, `task_id`, `atm_id`, `IPLAN`, `tgl_berangkat`, `tgl_selesai_kerjaan`, `tgl_pulang`, `tgl_status_perbaikan`, `user_update`, `date_update`, `flag_general_info`) VALUES
-(1, 1, 2, '202.134.0.155', '2018-10-4', '2018-10-5', '2018-10-18', '2018-10-15', 'ADMIN', '2018-10-11', 'success'),
-(2, 2, 1, '202.134.0.155', '2018-10-4', '2018-10-5', '2018-10-19', '2018-10-15', 'ADMIN', '2018-10-11', 'success');
+(3, 5, 1111, '202.121.22.2', '28-10-2019', '31-11-2019', '1-12-2019', '25-12-2019', 'admin', '25-12-2019', 'false');
 
 -- --------------------------------------------------------
 
@@ -279,7 +273,7 @@ CREATE TABLE `lokasi` (
   `task_id` int(11) DEFAULT NULL,
   `kanwil` varchar(255) DEFAULT NULL,
   `kanca_induk` varchar(255) DEFAULT NULL,
-  `alamat_install` text,
+  `alamat_install` text DEFAULT NULL,
   `provinsi` varchar(255) DEFAULT NULL,
   `kota` varchar(255) DEFAULT NULL,
   `jarkom_id` int(11) DEFAULT NULL,
@@ -301,8 +295,7 @@ CREATE TABLE `lokasi` (
 --
 
 INSERT INTO `lokasi` (`id`, `task_id`, `kanwil`, `kanca_induk`, `alamat_install`, `provinsi`, `kota`, `jarkom_id`, `satelite_id`, `nama_pic`, `no_hp_pic`, `hub`, `latitude`, `longitude`, `alamat_sekarang`, `catatan`, `flag_data_lokasi`, `customer_pic_nama`, `customer_pic_phone`) VALUES
-(1, 1, 'Jakarta Selatan', 'DKI Jakarta', 'KEbayoran Baru', 'DKI Jakarta 1', 'Jakarta', 1, 2, 'asdf', '456987', 'lalalal', '10.23', '11.25', 'Jakarta', 'apa aja', 'ok', 'bayu', '1234'),
-(2, 2, 'Depok', 'Depok', 'alksndlasnkdalksdn', 'Jawa Barat', 'Depok', 1, 2, 'laksdlaksnd', '6876465465', 'asjndakjsdna', '20.232', '220.03', 'akshdajsdbakjsd', 'ashdabbaksdbak', 'aksdbakjsdb', 'yuuuiii', '31351655156');
+(3, 5, 'asdf', 'asf', 'alksndalsdnalskd', 'Jabar', 'Depok', 1, 2, 'asdads', '21', '321321', '32132', '312321', 'asdasdasd', 'asdasd', 'true', 'adadsa', '3213213');
 
 -- --------------------------------------------------------
 
@@ -369,9 +362,9 @@ CREATE TABLE `spd` (
   `flagupload` varchar(255) DEFAULT NULL,
   `file_usercreate` varchar(255) DEFAULT NULL,
   `file_datecreate` varchar(255) DEFAULT NULL,
-  `keterangan` text,
+  `keterangan` text DEFAULT NULL,
   `yout_image_64_name` varchar(255) DEFAULT NULL,
-  `your_image_64_file` text,
+  `your_image_64_file` text DEFAULT NULL,
   `iplan` varchar(255) DEFAULT NULL,
   `cacatan_transaksi` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -381,8 +374,10 @@ CREATE TABLE `spd` (
 --
 
 INSERT INTO `spd` (`id`, `flagconfirm`, `id_alamat`, `file_url`, `description`, `task_id`, `catatan_transaksi`, `jenis_biaya_id`, `nominal`, `tgl_input_biaya`, `sisa`, `status_spd`, `flagtime`, `flagupload`, `file_usercreate`, `file_datecreate`, `keterangan`, `yout_image_64_name`, `your_image_64_file`, `iplan`, `cacatan_transaksi`) VALUES
-(1, 'ID=\'idPenguna\'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
-(2, 'asdf', '1', 'asasf', 'asfasf', 1, 'asdasdasda', 1, 2120000, '23-FEB-2019', '123', 'open', 'asdasda', 'asdasd', 'asdasd', 'asdad', 'asdasdasd', 'asdasd', 'asdasda', '20.21.22.23', '');
+(1, 'ID=\'idPenguna\'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'SPD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(3, 'asdsad', '1', NULL, NULL, 4, 'asd', 2, 113213, NULL, NULL, 'SPD', NULL, NULL, NULL, NULL, 'asdasd', NULL, NULL, '202.134.0.155', 'asdasd'),
+(4, 'ID=\'idPenguna\'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'SPD-VID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(5, 'asdsad', '1', NULL, NULL, 4, 'asd', 2, 113213, NULL, NULL, 'SPD-VID', NULL, NULL, NULL, NULL, 'asdasd', NULL, NULL, '202.134.0.155', 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -393,7 +388,7 @@ INSERT INTO `spd` (`id`, `flagconfirm`, `id_alamat`, `file_url`, `description`, 
 CREATE TABLE `survey` (
   `id` int(11) NOT NULL,
   `task_id` int(11) DEFAULT NULL,
-  `alamat_pengiriman_survey` text,
+  `alamat_pengiriman_survey` text DEFAULT NULL,
   `tempat_penyimpanan_survey` varchar(255) DEFAULT NULL,
   `nama_pic_survey` varchar(255) DEFAULT NULL,
   `kontsk_pic_survey` varchar(255) DEFAULT NULL,
@@ -410,18 +405,10 @@ CREATE TABLE `survey` (
   `panjang_kabel_survey` varchar(255) DEFAULT NULL,
   `type_kabel_survey` varchar(255) DEFAULT NULL,
   `arah_antena_survey` varchar(255) DEFAULT NULL,
-  `keterangan_survey` text,
+  `keterangan_survey` text DEFAULT NULL,
   `status_hasil_survey` varchar(255) DEFAULT NULL,
   `flag_data_survey` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `survey`
---
-
-INSERT INTO `survey` (`id`, `task_id`, `alamat_pengiriman_survey`, `tempat_penyimpanan_survey`, `nama_pic_survey`, `kontsk_pic_survey`, `penempatan_grounding_survey`, `ukuran_antena_survey`, `tempat_antena_survey`, `kekuatan_roof_survey`, `jenis_mounting_survey`, `latitude_survey`, `longitude_survey`, `listrik_awal_survey`, `sarpen_aci_indoor`, `sarpen_ups_survey`, `panjang_kabel_survey`, `type_kabel_survey`, `arah_antena_survey`, `keterangan_survey`, `status_hasil_survey`, `flag_data_survey`) VALUES
-(1, 1, '+alamatPengiriman+', '+tempatPenyimpanan+', '+namaPic+', '+kontakPic+', '+grounding+', '+ukuranAntena+', '+tempatAntena+', '+kekuatanRoof+', '+mountingAntena+', '+latitude+', '+longitude+', '+pengukuranListrik+', '+pendukungACIndoor+', '+pendukungUPS+', '+panjangKabel+', '+spinnerTypeKabel+', '+arahAntena+', '+keterangan+', '+hasilSurvey+', '+statusSv+'),
-(2, 2, 'asdas', 'asdas', 'lkl', 'dfg', 'zxczx', 'ghj', 'fghj', 'nbhfj', 'mnb', 'fghj', 'llkhl', 'asdas', 'aasdf', 'ghj', 'kjh', 'sasd', 'ghdf', 'asdf', 'asdas', 'kglfgk');
 
 -- --------------------------------------------------------
 
@@ -432,7 +419,7 @@ INSERT INTO `survey` (`id`, `task_id`, `alamat_pengiriman_survey`, `tempat_penyi
 CREATE TABLE `task` (
   `id` int(11) NOT NULL,
   `nama_remote` varchar(255) DEFAULT NULL,
-  `alamat` text,
+  `alamat` text DEFAULT NULL,
   `no_task` varchar(255) DEFAULT NULL,
   `vid` int(11) DEFAULT NULL,
   `tanggal_task` varchar(255) DEFAULT NULL,
@@ -453,8 +440,8 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id`, `nama_remote`, `alamat`, `no_task`, `vid`, `tanggal_task`, `provinsi`, `id_jenis_task`, `nama_kordinator`, `user_id`, `status_task`, `status_perbaikan`, `no_stamp`, `date_stamp`, `date_update`, `user_update`) VALUES
-(1, 'aasdfaa', 'asdasdasdasda', '1', 1, '2018-09-28', 'Jawa Barat', 1, 'asdasda', 1, '1', '1', '11231', '2018-09-28', '2018-09-28', 'MARTADINATA'),
-(2, 'aasdfaaaa', 'asdasdasdasda', '2', 2, '2018-09-28', 'Sumatera Barat', 2, 'asdasda', 1, 'opena', 'asdf', '11231', '', NULL, NULL);
+(4, 'asdsa', 'ASDASD', '1', 1, NULL, 'ASDADS', 1, 'asdadsd', 1, 'finish', 'asdasd', NULL, '', NULL, NULL),
+(5, 'ASNW', 'asdasdasdasd', '111111', 1, NULL, NULL, 1, 'asdasdasdad', 1, 'open', 'open', '1', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -469,7 +456,7 @@ CREATE TABLE `user` (
   `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password_reset_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `status` smallint(6) NOT NULL DEFAULT '10',
+  `status` smallint(6) NOT NULL DEFAULT 10,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   `level` int(11) DEFAULT NULL,
@@ -482,7 +469,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `level`, `nama`, `nik`) VALUES
-(1, 'admin', 'CU6qlakzdUpZIO4TCpMffTWqfvCzbgne', '$2y$13$6uWyCV60spK3GhO3b/fL6OREFou80onXF/gK1AjPD2fo/gj7RPlK2', NULL, 'admin@admin.com', 10, 1562253658, 1562253658, NULL, 'admin', '15997123');
+(1, 'admin', 'CU6qlakzdUpZIO4TCpMffTWqfvCzbgne', '$2y$13$miQmzQt80VGf1N8KpjtXgeklCKdmgW7Qpomfnj3xo7M3s34EdleFu', NULL, 'admin@admin.com', 10, 1562253658, 1562253658, NULL, 'admin', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -602,25 +589,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `cost_task`
 --
 ALTER TABLE `cost_task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `data_teknisi`
 --
 ALTER TABLE `data_teknisi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `detail_task`
 --
 ALTER TABLE `detail_task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `foto`
@@ -632,7 +619,7 @@ ALTER TABLE `foto`
 -- AUTO_INCREMENT for table `general_info`
 --
 ALTER TABLE `general_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `jarkom`
@@ -650,7 +637,7 @@ ALTER TABLE `jenis_biaya`
 -- AUTO_INCREMENT for table `lokasi`
 --
 ALTER TABLE `lokasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `satelite`
@@ -662,7 +649,7 @@ ALTER TABLE `satelite`
 -- AUTO_INCREMENT for table `spd`
 --
 ALTER TABLE `spd`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `survey`
@@ -674,7 +661,7 @@ ALTER TABLE `survey`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`

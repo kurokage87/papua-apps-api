@@ -68,11 +68,11 @@ class ApiController extends Controller {
                 'Result' => "True",
                 'Raw' => array(
                     [
-                    'UserName' => Yii::$app->user->identity->username,
-                    'Password' => $model->password,
-                    'Nama' => Yii::$app->user->identity->nama,
-                    //'pass' => \Yii::$app->getSecurity()->decryptByPassword(\Yii::$app->user->identity->password_hash),
-                    'Email' => Yii::$app->user->identity->email,
+                        'UserName' => Yii::$app->user->identity->username,
+                        'Password' => $model->password,
+                        'Nama' => Yii::$app->user->identity->nama,
+                        //'pass' => \Yii::$app->getSecurity()->decryptByPassword(\Yii::$app->user->identity->password_hash),
+                        'Email' => Yii::$app->user->identity->email,
                     ]
                 )
             ];
@@ -164,8 +164,8 @@ class ApiController extends Controller {
             )
         ];
     }
-    
-    public function actionInsertBarangTerpasang(){
+
+    public function actionInsertBarangTerpasang() {
         $data = Yii::$app->getRequest()->getRawBody();
         $jsonDec = json_decode($data);
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
@@ -175,18 +175,18 @@ class ApiController extends Controller {
 //        Upload Proses
         $model = new \app\models\Barang();
         $image = $val2->YourImage64File;
-        
-        $folder = Yii::getAlias('@webroot/'.$val2->file_url);
+
+        $folder = Yii::getAlias('@webroot/' . $val2->file_url);
         $name = $val2->YourImage64Name;
         $fileName = $name . '.jpg';
-        $filePath = $folder .'/'.$fileName;
+        $filePath = $folder . '/' . $fileName;
         $rawImage = $image;
 //        var_dump($filePath);die;
         $removeHeader = explode(',', $rawImage);
-        
+
         $dec = base64_decode($removeHeader[1]);
         file_put_contents($filePath, $dec);
-        
+
         $model->file_url = $filePath;
         $model->nama_barang = $val1->NamaBarang;
         $model->task_id = $val1->VID;
@@ -202,118 +202,11 @@ class ApiController extends Controller {
         $model->keterangan = $val2->Keterangan;
         $model->flag_data_barang = $val3->FlagDataBarang;
         $model->jenis_barang = 'terpasang';
-        
+
 //        Send input to database
-        
+
         $model->save();
-        
-        $respon = \Yii::$app->getResponse();
-        if ($model->save()) {
-            $respon->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => 'Data Berhasil Di input'
-            ];
-        } else {
-            $respon->setStatusCode(200);
-            return [
-                "Result" => "False",
-                "Data1" => 'Data Gagal Di input'
-            ];
-        }
-    }
-    public function actionInsertFoto(){
-        $data = Yii::$app->getRequest()->getRawBody();
-        $jsonDec = json_decode($data);
-        $val1 = $jsonDec->Raw[0]->PARAM1[0];
-        $val2 = $jsonDec->Raw[0]->PARAM2[0];
-        
-//        \yii\helpers\VarDumper::dump($val2);die;
-//        Upload Proses
-        $model = new \app\models\Foto();
-        $image = $val1->YourImage64File;
-        
-        $folder = Yii::getAlias('@webroot/'.$val1->file_url);
-        $name = $val1->YourImage64Name;
-        $fileName = $name . '.jpg';
-        $filePath = $folder .'/'.$fileName;
-        $rawImage = $image;
-//        var_dump($filePath);die;
-        $removeHeader = explode(',', $rawImage);
-        
-        $dec = base64_decode($removeHeader[1]);
-        file_put_contents($filePath, $dec);
-        
-        $model->file_url = $filePath;
-        $model->file_usercreate = $val1->file_usercreate;
-        $model->flagtime = $val1->flagtime;
-        $model->task_id = $val1->VID;
-        $model->description = $val1->Description;
-        $model->keterangan = $val1->Keterangan;
-        $model->flag_upload_foto = $val2->FlagUploadPhoto;
-        
-        $model->save();
-//        var_dump($model->save());
-        $respon = \Yii::$app->getResponse();
-        
-        if($model->save() == true){
-            $respon->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => "Foto Berhasil Di Input"
-            ];
-        }else{
-            $respon->setStatusCode(200);
-            return [
-                "Result" => "False",
-                "Data1" => "Data Gagal Di Input"
-            ];
-        }
-        
-    }
-    
-    public function actionInsertBarangRusak(){
-        $data = Yii::$app->getRequest()->getRawBody();
-        $jsonDec = json_decode($data);
-        $val1 = $jsonDec->Raw[0]->PARAM1[0];
-        $val2 = $jsonDec->Raw[0]->PARAM2[0];
-        $val3 = $jsonDec->Raw[0]->PARAM3[0];
-//        \yii\helpers\VarDumper::dump($val3);die;
-//        Upload Proses
-        $model = new \app\models\Barang();
-        $image = $val2->YourImage64File;
-        
-        $folder = Yii::getAlias('@webroot/'.$val2->file_url);
-        $name = $val2->YourImage64Name;
-        $fileName = $name . '.jpg';
-        $filePath = $folder .'/'.$fileName;
-        $rawImage = $image;
-//        var_dump($filePath);die;
-        $removeHeader = explode(',', $rawImage);
-        
-        $dec = base64_decode($removeHeader[1]);
-        file_put_contents($filePath, $dec);
-        
-        $model->file_url = $filePath;
-        $model->nama_barang = $val1->NamaBarang;
-        $model->task_id = $val1->VID;
-        $model->type = $val1->Type;
-        $model->SN = $val1->SN;
-        $model->iplan = $val1->IPlan;
-        $model->status = $val1->Status;
-        $model->date_create = $val1->DateCreate;
-        $model->user_create = $val1->UserCreate;
-        $model->file_user_create = $val2->file_usercreate;
-        $model->file_date_create = $val2->file_datecreate;
-        $model->description = $val2->Description;
-        $model->keterangan = $val2->Keterangan;
-        $model->flag_data_barang = $val3->FlagDataBarang;
-        $model->jenis_barang = 'rusak';
-        
-//        Send input to database
-        
-        $model->save();
-        
+
         $respon = \Yii::$app->getResponse();
         if ($model->save()) {
             $respon->setStatusCode(200);
@@ -330,7 +223,114 @@ class ApiController extends Controller {
         }
     }
 
-    public function actionUpload() {     
+    public function actionInsertFoto() {
+        $data = Yii::$app->getRequest()->getRawBody();
+        $jsonDec = json_decode($data);
+        $val1 = $jsonDec->Raw[0]->PARAM1[0];
+        $val2 = $jsonDec->Raw[0]->PARAM2[0];
+
+//        \yii\helpers\VarDumper::dump($val2);die;
+//        Upload Proses
+        $model = new \app\models\Foto();
+        $image = $val1->YourImage64File;
+
+        $folder = Yii::getAlias('@webroot/' . $val1->file_url);
+        $name = $val1->YourImage64Name;
+        $fileName = $name . '.jpg';
+        $filePath = $folder . '/' . $fileName;
+        $rawImage = $image;
+//        var_dump($filePath);die;
+        $removeHeader = explode(',', $rawImage);
+
+        $dec = base64_decode($removeHeader[1]);
+        file_put_contents($filePath, $dec);
+
+        $model->file_url = $filePath;
+        $model->file_usercreate = $val1->file_usercreate;
+        $model->flagtime = $val1->flagtime;
+        $model->task_id = $val1->VID;
+        $model->description = $val1->Description;
+        $model->keterangan = $val1->Keterangan;
+        $model->flag_upload_foto = $val2->FlagUploadPhoto;
+
+        $model->save();
+//        var_dump($model->save());
+        $respon = \Yii::$app->getResponse();
+
+        if ($model->save() == true) {
+            $respon->setStatusCode(200);
+            return [
+                "Result" => "True",
+                "Data1" => "Foto Berhasil Di Input"
+            ];
+        } else {
+            $respon->setStatusCode(200);
+            return [
+                "Result" => "False",
+                "Data1" => "Data Gagal Di Input"
+            ];
+        }
+    }
+
+    public function actionInsertBarangRusak() {
+        $data = Yii::$app->getRequest()->getRawBody();
+        $jsonDec = json_decode($data);
+        $val1 = $jsonDec->Raw[0]->PARAM1[0];
+        $val2 = $jsonDec->Raw[0]->PARAM2[0];
+        $val3 = $jsonDec->Raw[0]->PARAM3[0];
+//        \yii\helpers\VarDumper::dump($val3);die;
+//        Upload Proses
+        $model = new \app\models\Barang();
+        $image = $val2->YourImage64File;
+
+        $folder = Yii::getAlias('@webroot/' . $val2->file_url);
+        $name = $val2->YourImage64Name;
+        $fileName = $name . '.jpg';
+        $filePath = $folder . '/' . $fileName;
+        $rawImage = $image;
+//        var_dump($filePath);die;
+        $removeHeader = explode(',', $rawImage);
+
+        $dec = base64_decode($removeHeader[1]);
+        file_put_contents($filePath, $dec);
+
+        $model->file_url = $filePath;
+        $model->nama_barang = $val1->NamaBarang;
+        $model->task_id = $val1->VID;
+        $model->type = $val1->Type;
+        $model->SN = $val1->SN;
+        $model->iplan = $val1->IPlan;
+        $model->status = $val1->Status;
+        $model->date_create = $val1->DateCreate;
+        $model->user_create = $val1->UserCreate;
+        $model->file_user_create = $val2->file_usercreate;
+        $model->file_date_create = $val2->file_datecreate;
+        $model->description = $val2->Description;
+        $model->keterangan = $val2->Keterangan;
+        $model->flag_data_barang = $val3->FlagDataBarang;
+        $model->jenis_barang = 'rusak';
+
+//        Send input to database
+
+        $model->save();
+
+        $respon = \Yii::$app->getResponse();
+        if ($model->save()) {
+            $respon->setStatusCode(200);
+            return [
+                "Result" => "True",
+                "Data1" => 'Data Berhasil Di input'
+            ];
+        } else {
+            $respon->setStatusCode(200);
+            return [
+                "Result" => "False",
+                "Data1" => 'Data Gagal Di input'
+            ];
+        }
+    }
+
+    public function actionUpload() {
 
         $model = new \app\models\Task();
 
@@ -376,8 +376,8 @@ class ApiController extends Controller {
             $respon->setStatusCode(200);
             return [
                 'Result' => "True",
-                'Raw' => 
-                    $model
+                'Raw' =>
+                $model
             ];
         } else {
             $respon->setStatusCode(200);
@@ -414,8 +414,8 @@ class ApiController extends Controller {
             ];
         }
     }
-    
-    public function actionListFoto($vid){
+
+    public function actionListFoto($vid) {
 //        SELECT f.file_url, t.vid, f.description, f.keterangan, f.description  FROM foto f
 //LEFT JOIN task t on f.task_id = t.id
 //WHERE t.vid = 1
@@ -425,61 +425,7 @@ class ApiController extends Controller {
                 ->leftJoin('task t', 'f.task_id = t.id')
                 ->where(['t.vid' => $vid])
                 ->all();
-        
-        $respon = \Yii::$app->getResponse();
-        if ($model != null) {
-            $respon->setStatusCode(200);
-            return [
-                'Result' => "True",
-                'Raw' => $model
-            ];
-        } else {
-            $respon->setStatusCode(200);
-            return [
-                'Result' => "False",
-                'Raw' => 'Data tidak ditemukan'
-            ];
-        }
-    }
-    
-    public function actionListBarangRusak($vid){
-//        SELECT b.nama_barang as NamaBarang, t.vid as VID, b.type as Type, b.SN, b.esnmodem as ESNMODEM, b.status, b.file_url, b.description as Description FROM barang b
-//LEFT JOIN task t on b.task_id = t.id
-//WHERE t.vid = 1
-        
-        $model = (new \yii\db\Query())
-                ->select('b.nama_barang as NamaBarang, t.vid as VID, b.type as Type, b.SN, b.esnmodem as ESNMODEM, b.status as Status, b.file_url, b.description as Description')
-                ->from('barang b')
-                ->leftJoin('task t', 'b.task_id = t.id')
-                ->where(['t.vid' => $vid])
-                ->andWhere(['b.status' => 'rusak'])
-                ->all();
-        
-        $respon = \Yii::$app->getResponse();
-        if ($model != null) {
-            $respon->setStatusCode(200);
-            return [
-                'Result' => "True",
-                'Raw' => $model
-            ];
-        } else {
-            $respon->setStatusCode(200);
-            return [
-                'Result' => "False",
-                'Raw' => 'Data tidak ditemukan'
-            ];
-        }
-    }
-    
-    public function actionListBarangTerpasang($vid){
-        $model = (new \yii\db\Query())
-                ->select('b.nama_barang as NamaBarang, t.vid as VID, b.type as Type, b.SN, b.esnmodem as ESNMODEM, b.status as Status, b.file_url, b.description as Description')
-                ->from('barang b')
-                ->leftJoin('task t', 'b.task_id = t.id')
-                ->where(['t.vid' => $vid])
-                ->andWhere(['b.status' => 'terpasang'])
-                ->all();
-        
+
         $respon = \Yii::$app->getResponse();
         if ($model != null) {
             $respon->setStatusCode(200);
@@ -496,19 +442,84 @@ class ApiController extends Controller {
         }
     }
 
-    public function actionDetailTask($id) {
+    public function actionListBarangRusak($vid) {
+//        SELECT b.nama_barang as NamaBarang, t.vid as VID, b.type as Type, b.SN, b.esnmodem as ESNMODEM, b.status, b.file_url, b.description as Description FROM barang b
+//LEFT JOIN task t on b.task_id = t.id
+//WHERE t.vid = 1
+
         $model = (new \yii\db\Query())
-                ->select('dt.id_status_perbaikan as IdStatusPerbaikan, dt.flag_data_instalasi as FlagDataInstalasi, dt.diameter_antena as DiameterAntena, dt.polarisasi_arah_antena as PolarisasiArahAntena, dt.elevasi_arah_antena as EvlevasiArahAtena, dt.azimuth_arah_antena as AzimuthArahAntena, '
-                        . 'dt.kvaups as KVAUPS, dt.ip_management as IPManagement, dt.receive_symbole_rate as ReceiveSymboleRate, dt.phase_netral_pln as PhaseNetralPLN, '
-                        . 'dt.phase_netral_ups as PhaseNetralUPS, dt.phase_netral_genset as PhaseNetralGenset, dt.phase_ground_pln as PhaseGroundPLN, dt.phase_ground_ups as PhaseGroundUPS, '
-                        . 'dt.phase_ground_genset as PhaseGroundGenset, dt.netral_ground_pln as NetralGroundPLN, dt.netral_ground_ups as NetralGroundUPS, dt.netral_ground_genset as NetralGroundGenset, '
-                        . 'dt.satelite_longitude as SateliteLongitude, dt.iplan1 as IPLAN1, dt.subnetmask1, dt.iplan2 as IPLAN2, dt.subnetmask2, dt.hasil_test_alamat1 as HasilTestALamat1, dt.success_test1 as SuccessTest1, '
-                        . 'dt.loss_test1 as LossTest1, dt.keterangan_test1 as KeteranganTest1, dt.hasil_test_alamat2 as HasilTestAlamat2, dt.success_test2 as SuccessTest2, dt.loss_test2 as LossTest2, dt.keterangan_test2 as KeteranganTest2, '
-                        . 'dt.hasil_test_alamat3 as HasilTestAlamat3, dt.success_test3 as SuccessTest3, dt.loss_test3 as LossTest3, dt.keterangan_test3 as KeteranganTest3')
-                ->from('detail_task dt')
-                ->leftJoin('task t', 'dt.task_id = t.id')
-                ->where(['t.id' => $id])
+                ->select('b.nama_barang as NamaBarang, t.vid as VID, b.type as Type, b.SN, b.esnmodem as ESNMODEM, b.status as Status, b.file_url, b.description as Description')
+                ->from('barang b')
+                ->leftJoin('task t', 'b.task_id = t.id')
+                ->where(['t.vid' => $vid])
+                ->andWhere(['b.status' => 'rusak'])
                 ->all();
+
+        $respon = \Yii::$app->getResponse();
+        if ($model != null) {
+            $respon->setStatusCode(200);
+            return [
+                'Result' => "True",
+                'Raw' => $model
+            ];
+        } else {
+            $respon->setStatusCode(200);
+            return [
+                'Result' => "False",
+                'Raw' => 'Data tidak ditemukan'
+            ];
+        }
+    }
+
+    public function actionListBarangTerpasang($vid) {
+        $model = (new \yii\db\Query())
+                ->select('b.nama_barang as NamaBarang, t.vid as VID, b.type as Type, b.SN, b.esnmodem as ESNMODEM, b.status as Status, b.file_url, b.description as Description')
+                ->from('barang b')
+                ->leftJoin('task t', 'b.task_id = t.id')
+                ->where(['t.vid' => $vid])
+                ->andWhere(['b.status' => 'terpasang'])
+                ->all();
+
+        $respon = \Yii::$app->getResponse();
+        if ($model != null) {
+            $respon->setStatusCode(200);
+            return [
+                'Result' => "True",
+                'Raw' => $model
+            ];
+        } else {
+            $respon->setStatusCode(200);
+            return [
+                'Result' => "False",
+                'Raw' => 'Data tidak ditemukan'
+            ];
+        }
+    }
+
+    public function actionDetailTask($id, $nik) {
+//        $model = (new \yii\db\Query())
+//                ->select('dt.id_status_perbaikan as IdStatusPerbaikan, dt.flag_data_instalasi as FlagDataInstalasi, dt.diameter_antena as DiameterAntena, dt.polarisasi_arah_antena as PolarisasiArahAntena, dt.elevasi_arah_antena as EvlevasiArahAtena, dt.azimuth_arah_antena as AzimuthArahAntena, '
+//                        . 'dt.kvaups as KVAUPS, dt.ip_management as IPManagement, dt.receive_symbole_rate as ReceiveSymboleRate, dt.phase_netral_pln as PhaseNetralPLN, '
+//                        . 'dt.phase_netral_ups as PhaseNetralUPS, dt.phase_netral_genset as PhaseNetralGenset, dt.phase_ground_pln as PhaseGroundPLN, dt.phase_ground_ups as PhaseGroundUPS, '
+//                        . 'dt.phase_ground_genset as PhaseGroundGenset, dt.netral_ground_pln as NetralGroundPLN, dt.netral_ground_ups as NetralGroundUPS, dt.netral_ground_genset as NetralGroundGenset, '
+//                        . 'dt.satelite_longitude as SateliteLongitude, dt.iplan1 as IPLAN1, dt.subnetmask1, dt.iplan2 as IPLAN2, dt.subnetmask2, dt.hasil_test_alamat1 as HasilTestALamat1, dt.success_test1 as SuccessTest1, '
+//                        . 'dt.loss_test1 as LossTest1, dt.keterangan_test1 as KeteranganTest1, dt.hasil_test_alamat2 as HasilTestAlamat2, dt.success_test2 as SuccessTest2, dt.loss_test2 as LossTest2, dt.keterangan_test2 as KeteranganTest2, '
+//                        . 'dt.hasil_test_alamat3 as HasilTestAlamat3, dt.success_test3 as SuccessTest3, dt.loss_test3 as LossTest3, dt.keterangan_test3 as KeteranganTest3')
+//                ->from('detail_task dt')
+//                ->leftJoin('task t', 'dt.task_id = t.id')
+//                ->where(['t.id' => $id])
+//                ->all();
+        $model = Yii::$app->db->createCommand("SELECT IFNULL(l.flag_data_lokasi, 'false') as FlagDataLokasi, IFNULL(gi.flag_general_info, 'false') as FlagGeneralInfo, IFNULL(dt.flag_data_teknis, 'false') as FlagDataTeknis, IFNULL(s.flag_data_survey, 'false') as FlagDataSurvey, IFNULL(f.flag_upload_foto, 'false') as FlagUploadFoto, IFNULL(dtsk.flag_data_instalasi, 'false') as FlagDataInstalasi, IFNULL(b.flag_data_barang, 'false') as FlagDataBarang, t.id_jenis_task as idJenisTask1, dtsk.id_status_perbaikan as idStatusPerbaikan, l.alamat_sekarang as alamatSekarang, t.vid as VID1, t.nama_remote as NAMAREMOTE, l.alamat_install as ALAMAT, l.kanwil as KANWIL, l.kanca_induk as KANCAINDUK, l.nama_pic as NoHpPic, l.no_hp_pic as PIC 
+FROM lokasi l
+LEFT JOIN task t on t.id = l.task_id
+LEFT JOIN barang b on b.task_id = t.id
+LEFT JOIN general_info gi on gi.task_id = t.id
+LEFT JOIN data_teknisi dt on dt.task_id = t.id
+LEFT JOIN survey s on s.task_id = t.id
+LEFT JOIN foto f on f.task_id = t.id
+LEFT JOIN detail_task dtsk ON dtsk.task_id = t.id
+LEFT JOIN user u on u.id = t.user_id
+WHERE l.task_id = t.id and t.id = ".$id." and u.nik = '".$nik."'")->queryAll();
 //        \yii\helpers\VarDumper::dump($model);die;
         $respon = \Yii::$app->getResponse();
 
@@ -539,7 +550,7 @@ class ApiController extends Controller {
         $model = \Yii::$app->db->createCommand('SELECT IFNULL(SUM(ct.cost), 0) as total FROM `cost_task` ct
                     LEFT JOIN task t on t.id = ct.task_id
                     left JOIN user u on u.id = t.user_id
-                    WHERE ct.status_cost = "diberikan" and u.nik = "'.$nik.'"')->queryAll();
+                    WHERE ct.status_cost = "diberikan" and u.nik = "' . $nik . '"')->queryAll();
 //        \yii\helpers\VarDumper::dump($model);die;
         $respon = \Yii::$app->getResponse();
         if ($model != null) {
@@ -561,9 +572,9 @@ class ApiController extends Controller {
 //                ->andWhere(['ct.status_cost' => 'persetujuan'])
 //                ->all();
         $model = \Yii::$app->db->createCommand('Select IFNULL(SUM(ct.cost), 0)as total from cost_task ct '
-                . 'LEFT JOIN task t on t.id = ct.task_id '
-                . 'LEFT JOIN user u on u.id = t.user_id '
-                . 'where ct.status_cost = "persetujuan" and u.nik = "'.$nik.'"')->queryAll();
+                        . 'LEFT JOIN task t on t.id = ct.task_id '
+                        . 'LEFT JOIN user u on u.id = t.user_id '
+                        . 'where ct.status_cost = "persetujuan" and u.nik = "' . $nik . '"')->queryAll();
         $respon = Yii::$app->getResponse();
         if ($model != null) {
             $respon->setStatusCode(200);
@@ -582,11 +593,11 @@ class ApiController extends Controller {
 
     public function actionQueryTotalPengguna($nik) {
 //         
-        
-            $model = \Yii::$app->db->createCommand("SELECT IFNULL(SUM(ct.cost),0) as totalsuk from cost_task ct "
-                    . "left join task t on ct.task_id = t.id "
-                    . "left join user u on u.id = t.user_id "
-                    . "where ct.status_cost = 'digunakan' and u.nik = '".$nik."'")->queryAll();
+
+        $model = \Yii::$app->db->createCommand("SELECT IFNULL(SUM(ct.cost),0) as totalsuk from cost_task ct "
+                        . "left join task t on ct.task_id = t.id "
+                        . "left join user u on u.id = t.user_id "
+                        . "where ct.status_cost = 'digunakan' and u.nik = '" . $nik . "'")->queryAll();
         $respon = Yii::$app->getResponse();
         if ($model != null) {
             $respon->setStatusCode(200);
@@ -615,7 +626,7 @@ class ApiController extends Controller {
                 ->leftJoin('user u', 't.user_id = u.id')
                 ->where(['u.nik' => $nik])
                 ->all();
-        
+
 //        \yii\helpers\VarDumper::dump($model[0]);die;
         $respon = Yii::$app->getResponse();
         if ($model != null) {
@@ -655,40 +666,40 @@ class ApiController extends Controller {
 //LEFT JOIN user u on u.id = t.user_id
 //LEFT JOIN jenis_biaya jb on jb.id = s.jenis_biaya_id
 //WHERE u.nik = '".$nik."' and s.status_spd = 'spd-vid'")->query();
-        
+
         $model = Yii::$app->db->createCommand("SELECT t.no_task as NoTask, t.nama_remote as NamaTask, u.nama as NamaTeknisi, dt.id as IdTeknisi, dt.type_teknisi as TypeTeknisi, t.tanggal_task as TanggalTask, (
 SELECT IFNULL(SUM(ct.cost), 0) as total FROM `cost_task` ct
                     LEFT JOIN task t on t.id = ct.task_id
                     left JOIN user u on u.id = t.user_id
-                    WHERE ct.status_cost = 'diberikan' and u.nik = '".$nik."'
+                    WHERE ct.status_cost = 'diberikan' and u.nik = '" . $nik . "'
 ) as total,
 (
 Select IFNULL(SUM(ct.cost), 0)as total from cost_task ct
                 LEFT JOIN task t on t.id = ct.task_id
                 LEFT JOIN user u on u.id = t.user_id
-                where ct.status_cost = 'persetujuan' and u.nik = '".$nik."'
+                where ct.status_cost = 'persetujuan' and u.nik = '" . $nik . "'
 ) as approve,
 (
 SELECT IFNULL(SUM(ct.cost),0) as totalsuk from cost_task ct
                 left join task t on ct.task_id = t.id
                 left join user u on u.id = t.user_id
-                where ct.status_cost = 'digunakan' and u.nik = '".$nik."'
+                where ct.status_cost = 'digunakan' and u.nik = '" . $nik . "'
 ) as totalsuk,
 (
    (SELECT IFNULL(SUM(ct.cost), 0) as total FROM `cost_task` ct
                     LEFT JOIN task t on t.id = ct.task_id
                     left JOIN user u on u.id = t.user_id
-                    WHERE ct.status_cost = 'diberikan' and u.nik = '".$nik."') - 
+                    WHERE ct.status_cost = 'diberikan' and u.nik = '" . $nik . "') - 
     (Select IFNULL(SUM(ct.cost), 0)as total from cost_task ct
                 LEFT JOIN task t on t.id = ct.task_id
                 LEFT JOIN user u on u.id = t.user_id
-                where ct.status_cost = 'persetujuan' and u.nik = '".$nik."')
+                where ct.status_cost = 'persetujuan' and u.nik = '" . $nik . "')
 ) as sisa
 from spd s
 LEFT JOIN task t on s.task_id = t.id
 LEFT JOIN user u on u.id = t.user_id
 LEFT JOIN data_teknisi dt on dt.task_id = t.id
-WHERE u.nik = '".$nik."'")->queryAll();
+WHERE u.nik = '" . $nik . "'")->queryAll();
 //        \yii\helpers\VarDumper::dump($model);die;
         $respon = \Yii::$app->getResponse();
 
@@ -886,17 +897,17 @@ WHERE u.nik = '".$nik."'")->queryAll();
             ];
         }
     }
-    
-    public function actionUpdateDataLokasi(){
+
+    public function actionUpdateDataLokasi() {
         $data = Yii::$app->getRequest()->getRawBody();
         $jsonDec = json_decode($data);
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
         $val2 = $jsonDec->Raw[0]->PARAM2[0];
-        
+
         $model = Yii::$app->db->createCommand("UPDATE lokasi set kanwil=:kanwil, kanca_induk=:kancaInduk,alamat_install=:alamatInstall,provinsi=:provinsi, "
-                . "kota=:kota, jarkom_id=:idJarkom, satelite_id=:idSatelite,nama_pic=:namaPic,no_hp_pic=:noHpPic,hub=:hub,latitude=:latitude,longitude=:longitude, "
-                . "alamat_sekarang=:alamatSkrg, catatan=:catatan,flag_data_lokasi=:flagData,customer_pic_nama=:custPicNama,customer_pic_phone=:custPicPhone "
-                . "WHERE task_id = (SELECT id from task WHERE no_task =:noTask and vid=:vid)")
+                        . "kota=:kota, jarkom_id=:idJarkom, satelite_id=:idSatelite,nama_pic=:namaPic,no_hp_pic=:noHpPic,hub=:hub,latitude=:latitude,longitude=:longitude, "
+                        . "alamat_sekarang=:alamatSkrg, catatan=:catatan,flag_data_lokasi=:flagData,customer_pic_nama=:custPicNama,customer_pic_phone=:custPicPhone "
+                        . "WHERE task_id = (SELECT id from task WHERE no_task =:noTask and vid=:vid)")
                 ->bindValue(":kanwil", $val1->KANWIL)
                 ->bindValue(":kancaInduk", $val1->KANCAINDUK)
                 ->bindValue(":alamatInstall", $val1->ALAMAT)
@@ -917,7 +928,7 @@ WHERE u.nik = '".$nik."'")->queryAll();
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->bindValue(':vid', (int) substr($val2->WhereDatabaseinYou, (strlen($val2->WhereDatabaseinYou) - 1), (strlen($val2->WhereDatabaseinYou))))
                 ->execute();
-        
+
         $response = Yii::$app->getResponse();
         if ($model > 0) {
             $response->setStatusCode(200);
@@ -933,8 +944,8 @@ WHERE u.nik = '".$nik."'")->queryAll();
             ];
         }
     }
-    
-    public function actionUpdateDataTeknisi(){
+
+    public function actionUpdateDataTeknisi() {
         $data = Yii::$app->getRequest()->getRawBody();
         $jsonDec = json_decode($data);
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
@@ -965,7 +976,7 @@ WHERE u.nik = '".$nik."'")->queryAll();
                 ->bindValue(":flag", $val1->FlagDataTeknis)
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->execute();
-        
+
         $response = Yii::$app->getResponse();
         if ($model > 0) {
             $response->setStatusCode(200);
@@ -981,17 +992,17 @@ WHERE u.nik = '".$nik."'")->queryAll();
             ];
         }
     }
-    
-    public function actionUpdateDataTask(){
+
+    public function actionUpdateDataTask() {
         $data = Yii::$app->getRequest()->getRawBody();
         $jsonDec = json_decode($data);
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
         $val2 = $jsonDec->Raw[0]->PARAM2[0];
-        
+
 //        var_dump($val2);die;
         $model = Yii::$app->db->createCommand("UPDATE task SET vid=:vid , "
-                . "status_task = :statusTask, status_perbaikan = :statusPerbaikan, "
-                . "date_stamp = :dateStamp, date_update = :dateUpdate, user_update = :userUpdate WHERE id = :noListTask and no_task = :noTask")
+                        . "status_task = :statusTask, status_perbaikan = :statusPerbaikan, "
+                        . "date_stamp = :dateStamp, date_update = :dateUpdate, user_update = :userUpdate WHERE id = :noListTask and no_task = :noTask")
                 ->bindValue(':noListTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->bindValue(":vid", $val1->VID)
                 ->bindValue(":statusPerbaikan", $val1->IdStatusPerbaikan)
@@ -1016,12 +1027,12 @@ WHERE u.nik = '".$nik."'")->queryAll();
             ];
         }
     }
-    
-    public function actionUpdateDataSurvey(){
+
+    public function actionUpdateDataSurvey() {
         $data = Yii::$app->getRequest()->getRawBody();
         $jsonDec = json_decode($data);
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
-        
+
         $model = Yii::$app->db->createCommand("UPDATE survey SET alamat_pengiriman_survey = :alamatSurvey, tempat_penyimpanan_survey = :tmptSimpanSurvey, 
             nama_pic_survey = :picSurveyNama, kontsk_pic_survey = :kontakPicSurvey, penempatan_grounding_survey = :penempatanGround, ukuran_antena_survey = :ukuranAntena, 
             tempat_antena_survey = :tempatAntena, kekuatan_roof_survey = :kekuatanRoof, jenis_mounting_survey = :jenisMounting, latitude_survey =:latitude, 
@@ -1051,7 +1062,7 @@ WHERE u.nik = '".$nik."'")->queryAll();
                 ->bindValue("flag", $val1->FlagDataSurvey)
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->execute();
-        
+
         $response = Yii::$app->getResponse();
         if ($model > 0) {
             $response->setStatusCode(200);
@@ -1067,12 +1078,12 @@ WHERE u.nik = '".$nik."'")->queryAll();
             ];
         }
     }
-    
-    public function actionUpdateDataInstalasi(){
+
+    public function actionUpdateDataInstalasi() {
         $data = Yii::$app->getRequest()->getRawBody();
         $jsonDec = json_decode($data);
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
-        
+
 //        var_dump($val1);die;
         $model = Yii::$app->db->createCommand("UPDATE detail_task SET flag_data_instalasi = :flag, diameter_antena = :diameterAntena, 
             polarisasi_arah_antena =:polarArah, elevasi_arah_antena =:elevasiArah, azimuth_arah_antena =:azimuthArah, kvaups =:kvaups, ip_management = :ipMan, 
@@ -1125,7 +1136,7 @@ WHERE u.nik = '".$nik."'")->queryAll();
                 ->bindValue("ket3", $val1->KeteranganTest3)
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->execute();
-        
+
 //        \yii\helpers\VarDumper::dump($model);die;
         $response = Yii::$app->getResponse();
         if ($model > 0) {
