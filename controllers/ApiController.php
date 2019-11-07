@@ -755,42 +755,46 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
     }
 
     public function actionListSpdAndGambar($vid) {
-        $model = (new \yii\db\Query())
-                ->select('s.flagconfirm, s.id_alamat as ID, s.file_url, s.description as Description, t.vid as VID, t.no_task as NoTask, s.catatan_transaksi as CatatanTransaksi, 
-                            jb.nama_jenis_biaya as JenisBiaya,s.tgl_input_biaya as TgnInputBiaya, s.sisa, t.vid, (
-                        	SELECT SUM(ct.cost) FROM cost_task ct
-                                LEFT JOIN task t on ct.task_id = t.id
-                                    WHERE ct.task_id = (
-                                        SELECT t.id FROM task t
-                                        WHERE t.vid = ' . $vid . '
-                                    ) and ct.status_cost = "digunakan"
-                        ) as TotalPengeluaran')
-                ->from('spd s')
-                ->leftJoin('task t', 's.task_id = t.id')
-//                ->leftJoin('user u', 't.user_id = u.id')
-                ->leftJoin('jenis_biaya jb', 's.jenis_biaya_id = jb.id')
-                ->where(['t.vid' => $vid])
-                ->andWhere(['s.status_spd' => 'spd-vid'])
-                ->all();
+//        $model = (new \yii\db\Query())
+//                ->select('s.flagconfirm, s.id_alamat as ID, s.file_url, s.description as Description, t.vid as VID, t.no_task as NoTask, s.catatan_transaksi as CatatanTransaksi, 
+//                            jb.nama_jenis_biaya as JenisBiaya,s.tgl_input_biaya as TgnInputBiaya, s.sisa, t.vid, (
+//                        	SELECT SUM(ct.cost) FROM cost_task ct
+//                                LEFT JOIN task t on ct.task_id = t.id
+//                                    WHERE ct.task_id = (
+//                                        SELECT t.id FROM task t
+//                                        WHERE t.vid = ' . $vid . '
+//                                    ) and ct.status_cost = "digunakan"
+//                        ) as TotalPengeluaran')
+//                ->from('spd s')
+//                ->leftJoin('task t', 's.task_id = t.id')
+////                ->leftJoin('user u', 't.user_id = u.id')
+//                ->leftJoin('jenis_biaya jb', 's.jenis_biaya_id = jb.id')
+//                ->where(['t.vid' => $vid])
+//                ->andWhere(['s.status_spd' => 'spd-vid'])
+//                ->all();
 
-        $model = (new \yii\db\Query())
-                ->select('s.flagconfirm, s.id_alamat as ID, s.file_url, s.description as Description, t.vid as VID, t.no_task as NoTask, s.catatan_transaksi as CatatanTransaksi, 
-                            jb.nama_jenis_biaya as JenisBiaya,s.tgl_input_biaya as TgnInputBiaya, s.sisa, t.vid, (
-                        	SELECT SUM(ct.cost) FROM cost_task ct
-                                LEFT JOIN task t on ct.task_id = t.id
-                                    WHERE ct.task_id = (
-                                        SELECT t.id FROM task t
-                                        WHERE t.no_task = ' . $noTask . '
-                                    ) and ct.status_cost = "digunakan"
-                        ) as TotalPengeluaran')
-                ->from('spd s')
-                ->leftJoin('task t', 's.task_id = t.id')
-//                ->leftJoin('user u', 't.user_id = u.id')
-                ->leftJoin('jenis_biaya jb', 's.jenis_biaya_id = jb.id')
-                ->where(['t.no_task' => $noTask])
-                ->andWhere(['s.status_spd' => 'spd-vid'])
-                ->all();
-
+//        $model = (new \yii\db\Query())
+//                ->select('s.flagconfirm, s.id_alamat as ID, s.file_url, s.description as Description, t.vid as VID, t.no_task as NoTask, s.catatan_transaksi as CatatanTransaksi, 
+//                            jb.nama_jenis_biaya as JenisBiaya,s.tgl_input_biaya as TgnInputBiaya, s.sisa, t.vid, (
+//                        	SELECT SUM(ct.cost) FROM cost_task ct
+//                                LEFT JOIN task t on ct.task_id = t.id
+//                                    WHERE ct.task_id = (
+//                                        SELECT t.id FROM task t
+//                                        WHERE t.no_task = ' . $noTask . '
+//                                    ) and ct.status_cost = "digunakan"
+//                        ) as TotalPengeluaran')
+//                ->from('spd s')
+//                ->leftJoin('task t', 's.task_id = t.id')
+////                ->leftJoin('user u', 't.user_id = u.id')
+//                ->leftJoin('jenis_biaya jb', 's.jenis_biaya_id = jb.id')
+//                ->where(['t.no_task' => $noTask])
+//                ->andWhere(['s.status_spd' => 'spd-vid'])
+//                ->all();
+        $model = Yii::$app->db->createCommand("SELECT s.flagconfirm, f.file_url, s.description, t.vid, t.no_task, s.catatan_transaksi, jb.nama_jenis_biaya, s.nominal, s.tgl_input_biaya, f.id FROM spd s
+LEFT JOIN task t on t.id = s.task_id
+LEFT JOIN foto f on f.task_id = t.id
+LEFT JOIN jenis_biaya jb on jb.id = s.jenis_biaya_id
+WHERE t.vid = ".$vid." AND s.status_spd = 'spd-vid'")->queryAll();
         $respon = \Yii::$app->getResponse();
 
         if ($model != null) {
