@@ -520,7 +520,8 @@ class ApiController extends Controller {
             dt.fail_hw as FAIL_HW, dt.sqf as SQF, dt.initial_esno as INITIAL_ESNO, dt.carrier_to_noice as CARRIER_TO_NOICE, dt.hasil_xpoll as HasilXPOLL, 
             dt.operator_satelite as OperatorSatelite, dt.operator_helpdesk as OperatorHelpDesk, dt.out_pln as OutPLN, dt.out_ups as OutUPS, dt.ups_for_backup as UPSforBackup,
             dt.suhu_ruangan as SuhuRuangan, dt.type_mounting as TypeMounting, dt.panjang_kabel as PanjangKabel, dt.letak_antena as LetakAntena, 
-            dt.letak_modem as LetakModem, dt.kondisi_bangunan as KondisiBangungan, dt.analisa_problem as AnalisaProblem, dt.aktifitas_solusi as AktifitasSolusi, dt.cpi as CPI
+            dt.letak_modem as LetakModem, dt.kondisi_bangunan as KondisiBangungan, dt.analisa_problem as AnalisaProblem, dt.aktifitas_solusi as AktifitasSolusi, dt.cpi as CPI,
+            dtsk.flag_data_instalasi as FlagDataInstallasi, s.alamat_pengiriman_survey as AlamatPengirimanSurvey
 FROM lokasi l
 LEFT JOIN task t on t.id = l.task_id
 LEFT JOIN barang b on b.task_id = t.id
