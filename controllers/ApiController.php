@@ -1229,6 +1229,33 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
         }
     }
 
-   
+   public function actionForgetPassword($email){
+       $model = $model = \app\models\Users::findOne(['email' => $email]);
+//       \yii\helpers\VarDumper::dump($model);die;
+       $defaultPass = "papua123";
+       $model->password_hash = \Yii::$app->getSecurity()->generatePasswordHash($defaultPass);
+       $email = \Yii::$app->mailer->compose()
+                        ->setTo($email)
+                        ->setFrom([\Yii::$app->params['adminEmail'] => 'Papuan service robot'])
+                        ->setSubject('Forgot Password')
+                        ->setTextBody("Dear Bapak/Ibu ".$model->nama.""
+                                . "Password and telah berhasil diubah "
+                                . "Demi keamanan silahkan ganti password anda.")
+                        ->send();
+        $respon = Yii::$app->getResponse();
+        if ($model->save() && $email) {
+            $respon->setStatusCode(200);
+            return [
+                'Result' => "True",
+                'Data1' => 'Password Berhasil Diubah'
+            ];
+        } else {
+            $respon->setStatusCode(200);
+            return [
+                'Result' => "False",
+                'Data1' => 'Password Gagal Diubah'
+            ];
+        }
+   }
     
 }

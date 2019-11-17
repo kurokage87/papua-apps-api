@@ -39,7 +39,15 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'kunyakunyah2019@gmail.com',
+                'password' => 'rwslcsndpsqpmlkt',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -75,7 +83,8 @@ $config = [
                 'api/ListJenisBiaya' => 'api/list-jenis-biaya',
                 'api/ListFoto/<vid:\d+>' => 'api/list-foto',
                 'api/barangRusakAndFoto/<vid:\d+>' => 'api/list-barang-rusak',
-                'api/BarangFoto/<vid:\d+>' => 'api/list-barang-terpasang'
+                'api/BarangFoto/<vid:\d+>' => 'api/list-barang-terpasang',
+                'api/forgotPass/<email:[^/]+>' => 'api/forget-password'
             ],
         ],
 
