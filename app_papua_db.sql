@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2019 at 10:43 AM
+-- Generation Time: Nov 17, 2019 at 09:58 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -433,16 +433,17 @@ CREATE TABLE `task` (
   `date_stamp` varchar(100) NOT NULL,
   `date_update` varchar(255) DEFAULT NULL,
   `user_update` varchar(255) DEFAULT NULL,
-  `nama_task` varchar(255) DEFAULT NULL
+  `nama_task` varchar(255) DEFAULT NULL,
+  `sid` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`id`, `nama_remote`, `alamat`, `no_task`, `vid`, `tanggal_task`, `provinsi`, `id_jenis_task`, `nama_kordinator`, `user_id`, `status_task`, `status_perbaikan`, `no_stamp`, `date_stamp`, `date_update`, `user_update`, `nama_task`) VALUES
-(4, 'asdsa', 'ASDASD', '1', 1, NULL, 'ASDADS', 1, 'asdadsd', 1, 'finish', 'asdasd', NULL, '', NULL, NULL, 'Asdf'),
-(5, 'ASNW', 'asdasdasdasd', '111111', 1, NULL, NULL, 1, 'asdasdasdad', 1, 'open', 'open', '1', '', NULL, NULL, 'Adududud');
+INSERT INTO `task` (`id`, `nama_remote`, `alamat`, `no_task`, `vid`, `tanggal_task`, `provinsi`, `id_jenis_task`, `nama_kordinator`, `user_id`, `status_task`, `status_perbaikan`, `no_stamp`, `date_stamp`, `date_update`, `user_update`, `nama_task`, `sid`) VALUES
+(4, 'asdsa', 'ASDASD', '1', 1, NULL, 'ASDADS', 1, 'asdadsd', 1, 'finish', 'asdasd', NULL, '', NULL, NULL, 'Asdf', '1'),
+(5, 'ASNW', 'asdasdasdasd', '111111', 1, NULL, NULL, 1, 'asdasdasdad', 1, 'open', 'open', '1', '', NULL, NULL, 'Adududud', '2');
 
 -- --------------------------------------------------------
 
@@ -470,7 +471,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `level`, `nama`, `nik`) VALUES
-(1, 'admin', 'CU6qlakzdUpZIO4TCpMffTWqfvCzbgne', '$2y$13$miQmzQt80VGf1N8KpjtXgeklCKdmgW7Qpomfnj3xo7M3s34EdleFu', NULL, 'admin@admin.com', 10, 1562253658, 1562253658, NULL, 'admin', 'admin');
+(1, 'admin', 'CU6qlakzdUpZIO4TCpMffTWqfvCzbgne', '$2y$13$j2b.Pplkr5McqqULZROoluVC7y6VYn85sjmL/H6RvLTGIgpTN1evG', NULL, 'argigarnadi@gmail.com', 10, 1562253658, 1562253658, NULL, 'admin', 'admin');
 
 --
 -- Indexes for dumped tables
