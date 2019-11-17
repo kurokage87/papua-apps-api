@@ -1237,8 +1237,9 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
        $email = \Yii::$app->mailer->compose()
                         ->setTo($email)
                         ->setFrom([\Yii::$app->params['adminEmail'] => 'Papuan service robot'])
+                        ->setTextBody('Dear user '.$model->nama.' Lupa Password telah berhasil, saat ini password anda adalah "'.$defaultPass.'"<br> Regards   papuan')
                         ->setSubject('Forgot Password')
-                        ->setTextBody('Dear User "'.$model->nama.'" Lupa Password telah berhasil, saat ini password anda adalah "'.$defaultPass.'" Regards   papuan')
+                        
                         ->send();
         $respon = Yii::$app->getResponse();
         if ($model->save() && $email) {

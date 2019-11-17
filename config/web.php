@@ -36,7 +36,7 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@app/mail',
+            'viewPath' => '@app/mail/',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
@@ -85,7 +85,8 @@ $config = [
                 'api/ListFoto/<vid:\d+>' => 'api/list-foto',
                 'api/barangRusakAndFoto/<vid:\d+>' => 'api/list-barang-rusak',
                 'api/BarangFoto/<vid:\d+>' => 'api/list-barang-terpasang',
-                'api/forgotPass/<email:[^/]+>' => 'api/forget-password'
+                'api/forgotPass/<email:[^/]+>' => 'api/forget-password',
+                'api/ActionDataLokasi' => 'api/update-data-lokasi'
             ],
         ],
 
