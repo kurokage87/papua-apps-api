@@ -509,7 +509,18 @@ class ApiController extends Controller {
 //                ->leftJoin('task t', 'dt.task_id = t.id')
 //                ->where(['t.id' => $id])
 //                ->all();
-        $model = Yii::$app->db->createCommand("SELECT IFNULL(l.flag_data_lokasi, 'false') as FlagDataLokasi, gi.IPLAN, l.laporan_pengaduan as LaporanPengaduan, gi.tgl_berangkat as TglBerangkat, gi.tgl_selesai_kerjaan as TglSelesaiKerjaan, gi.tgl_pulang as TglPulang, gi.tgl_status_perbaikan as TglStatusPerbaikan, l.catatan as CatatanKoordinator, t.id_status_kordinator as IdStatusKoordinator , gi.atm_id as IdATM ,IFNULL(gi.flag_general_info, 'false') as FlagGeneralInfo, IFNULL(dt.flag_data_teknis, 'false') as FlagDataTeknis, IFNULL(s.flag_data_survey, 'false') as FlagDataSurvey, IFNULL(f.flag_upload_foto, 'false') as FlagUploadFoto, t.sid as SID,IFNULL(dtsk.flag_data_instalasi, 'false') as FlagDataInstalasi, IFNULL(b.flag_data_barang, 'false') as FlagDataBarang, t.id_jenis_task as idJenisTask1, dtsk.id_status_perbaikan as IdStatusPerbaikan, l.alamat_sekarang as alamatSekarang, t.vid as VID1, t.nama_remote as NAMAREMOTE, l.alamat_install as ALAMAT, l.kanwil as KANWIL, l.kanca_induk as KANCAINDUK, l.nama_pic as NoHpPic, l.no_hp_pic as PIC, l.kota as KOTA, l.jarkom_id as IdJarkom, l.satelite_id as IdSatelite, l.latitude as Latitude, l.longitude as Longitude, t.no_task as NoTask, l.catatan as Catatan, l.hub as Hub, l.provinsi as Provinsi
+        $model = Yii::$app->db->createCommand("SELECT IFNULL(l.flag_data_lokasi, 'false') as FlagDataLokasi, gi.IPLAN, l.laporan_pengaduan as LaporanPengaduan, 
+            gi.tgl_berangkat as TglBerangkat, gi.tgl_selesai_kerjaan as TglSelesaiKerjaan, gi.tgl_pulang as TglPulang, gi.tgl_status_perbaikan as TglStatusPerbaikan, 
+            l.catatan as CatatanKoordinator, t.id_status_kordinator as IdStatusKoordinator , gi.atm_id as IdATM ,IFNULL(gi.flag_general_info, 'false') as FlagGeneralInfo, 
+            IFNULL(dt.flag_data_teknis, 'false') as FlagDataTeknis, IFNULL(s.flag_data_survey, 'false') as FlagDataSurvey, IFNULL(f.flag_upload_foto, 'false') as FlagUploadFoto, 
+            t.sid as SID,IFNULL(dtsk.flag_data_instalasi, 'false') as FlagDataInstalasi, IFNULL(b.flag_data_barang, 'false') as FlagDataBarang, t.id_jenis_task as idJenisTask1, 
+            dtsk.id_status_perbaikan as IdStatusPerbaikan, l.alamat_sekarang as alamatSekarang, t.vid as VID1, t.nama_remote as NAMAREMOTE, l.alamat_install as ALAMAT,
+            l.kanwil as KANWIL, l.kanca_induk as KANCAINDUK, l.nama_pic as NoHpPic, l.no_hp_pic as PIC, l.kota as KOTA, l.jarkom_id as IdJarkom, l.satelite_id as IdSatelite, 
+            l.latitude as Latitude, l.longitude as Longitude, t.no_task as NoTask, l.catatan as Catatan, l.hub as Hub, l.provinsi as Provinsi,
+            dt.fail_hw as FAIL_HW, dt.sqf as SQF, dt.initial_esno as INITIAL_ESNO, dt.carrier_to_noice as CARRIER_TO_NOICE, dt.hasil_xpoll as HasilXPOLL, 
+            dt.operator_satelite as OperatorSatelite, dt.operator_helpdesk as OperatorHelpDesk, dt.out_pln as OutPLN, dt.out_ups as OutUPS, dt.ups_for_backup as UPSforBackup,
+            dt.suhu_ruangan as SuhuRuangan, dt.type_mounting as TypeMounting, dt.panjang_kabel as PanjangKabel, dt.letak_antena as LetakAntena, 
+            dt.letak_modem as LetakModem, dt.kondisi_bangunan as KondisiBangungan, dt.analisa_problem as AnalisaProblem, dt.aktifitas_solusi as AktifitasSolusi, dt.cpi as CPI
 FROM lokasi l
 LEFT JOIN task t on t.id = l.task_id
 LEFT JOIN barang b on b.task_id = t.id
