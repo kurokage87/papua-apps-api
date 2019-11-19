@@ -526,7 +526,7 @@ class ApiController extends Controller {
             s.ukuran_antena_survey as UkuranAntenaSurvey, s.tempat_antena_survey as TempatAntenaSurvey, s.kekuatan_roof_survey as KekuatanRoofSurvey,
             s.jenis_mounting_survey as JenisMountingSurvey, s.latitude_survey as LatitudeSurvey, s.longitude_survey as LongitudeSurvey, s.listrik_awal_survey as ListrikAwalSurvey, 
             s.sarpen_aci_indoor as SarpenACIndoorSurvey, s.sarpen_ups_survey as SarpenUPSSurvey, s.panjang_kabel_survey as PanjangKabelSurvey,
-            s.type_kabel_survey as TypeKabelSurvey, s.arah_antena_survey as ArahAntenaSurvey, s.status_hasil_survey, s.keterangan_survey as KeteranganSurvey,
+            s.type_kabel_survey as TypeKabelSurvey, s.arah_antena_survey as ArahAntenaSurvey, s.keterangan_survey as KeteranganSurvey,
             dtsk.diameter_antena as DiameterAntena, dtsk.polarisasi_arah_antena as PolarisasiArahAntena, dtsk.elevasi_arah_antena as ElevasiArahAntena, 
             dtsk.azimuth_arah_antena as AzimuthArahAntena, dtsk.kvaups as KVAUPS, dtsk.ip_management as IPManagement, dtsk.receive_symbole_rate as ReceiveSymboleRate,
             dtsk.phase_netral_pln as PhaseNetralPLN, dtsk.phase_netral_ups as PhaseNetralUPS, dtsk.phase_netral_genset as PhaseNetralGenset, dtsk.phase_ground_pln as PhaseGroundPLN, 
@@ -535,7 +535,7 @@ class ApiController extends Controller {
             dtsk.iplan2 as IPLAN2, dtsk.subnetmask2 as subnetmask2, dtsk.hasil_test_alamat1 as HasilTestAlamat1, dtsk.success_test1 as SuccessTest1, 
             dtsk.loss_test1 as LossTest1, dtsk.keterangan_test1 as KeteranganTest1, dtsk.hasil_test_alamat2 as HasilTestAlamat2, dtsk.success_test2 as SuccessTest2,
             dtsk.loss_test2 as LossTest2, dtsk.keterangan_test2 as KeteranganTest2, dtsk.hasil_test_alamat3 as HasilTestAlamat3, dtsk.success_test3 as SuccessTest3, 
-            dtsk.loss_test3 as LossTest3, dtsk.keterangan_test3 as KeteranganTest3
+            dtsk.loss_test3 as LossTest3, dtsk.keterangan_test3 as KeteranganTest3, s.tempat_penyimpanan_survey as TempatPenyimpananSurvey, s.status_hasil_survey as StatusHasilSurvey
 
 FROM lokasi l
 LEFT JOIN task t on t.id = l.task_id
