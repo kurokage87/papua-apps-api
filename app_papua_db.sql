@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2019 at 10:20 AM
+-- Generation Time: Nov 23, 2019 at 08:39 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -53,7 +53,8 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id`, `task_id`, `nama_barang`, `type`, `SN`, `iplan`, `esnmodem`, `status`, `file_url`, `file_user_create`, `file_date_create`, `description`, `keterangan`, `date_create`, `user_create`, `jenis_barang`, `flag_data_barang`) VALUES
-(5, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(5, 4, NULL, NULL, NULL, '', NULL, 'terpasang', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 5, NULL, NULL, NULL, '', NULL, 'rusak', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -296,7 +297,8 @@ CREATE TABLE `lokasi` (
 --
 
 INSERT INTO `lokasi` (`id`, `task_id`, `kanwil`, `kanca_induk`, `alamat_install`, `provinsi`, `kota`, `jarkom_id`, `satelite_id`, `nama_pic`, `no_hp_pic`, `hub`, `latitude`, `longitude`, `alamat_sekarang`, `catatan`, `flag_data_lokasi`, `customer_pic_nama`, `customer_pic_phone`, `laporan_pengaduan`) VALUES
-(3, 5, 'asdf', 'asf', 'alksndalsdnalskd', 'Jabar', 'Depok', 1, 2, 'asdads', '21', '321321', '32132', '312321', 'asdasdasd', 'asdasd', 'true', 'adadsa', '3213213', NULL);
+(3, 5, 'asdf', 'asf', 'alksndalsdnalskd', 'Jabar', 'Depok', 1, 2, 'asdads', '21', '321321', '32132', '312321', 'asdasdasd', 'asdasd', 'true', 'adadsa', '3213213', NULL),
+(4, 6, 'asdf', 'asf', 'alksndalsdnalskd', 'Jabar', 'Depok', 2, 2, '21', 'asdasd', 'APT 9', '32132', '312321', 'ciracas', 'bagus', '1', '21', '21', 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -411,6 +413,14 @@ CREATE TABLE `survey` (
   `flag_data_survey` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `survey`
+--
+
+INSERT INTO `survey` (`id`, `task_id`, `alamat_pengiriman_survey`, `tempat_penyimpanan_survey`, `nama_pic_survey`, `kontsk_pic_survey`, `penempatan_grounding_survey`, `ukuran_antena_survey`, `tempat_antena_survey`, `kekuatan_roof_survey`, `jenis_mounting_survey`, `latitude_survey`, `longitude_survey`, `listrik_awal_survey`, `sarpen_aci_indoor`, `sarpen_ups_survey`, `panjang_kabel_survey`, `type_kabel_survey`, `arah_antena_survey`, `keterangan_survey`, `status_hasil_survey`, `flag_data_survey`) VALUES
+(3, 4, 'asdasdas', 'asdas', 'admin', '453453123123', 'asdasda', '12', 'asdasd', '12', 'asdasd', '12', '12', '12', '12', '12', '12', '12', '121', 'adsasdasdasd', 'open', 'open'),
+(4, 5, 'asdasdas', 'asdas', 'admin', '453453123123', 'asdasda', '12', 'asdasd', '12', 'asdasd', '12', '12', '12', '12', '12', '12', '12', '121', 'adsasdasdasd', 'finish', 'open');
+
 -- --------------------------------------------------------
 
 --
@@ -422,7 +432,7 @@ CREATE TABLE `task` (
   `nama_remote` varchar(255) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
   `no_task` varchar(255) DEFAULT NULL,
-  `vid` int(11) DEFAULT NULL,
+  `vid` varchar(255) DEFAULT NULL,
   `tanggal_task` varchar(255) DEFAULT NULL,
   `provinsi` varchar(255) DEFAULT NULL,
   `id_jenis_task` int(11) DEFAULT NULL,
@@ -444,8 +454,9 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id`, `nama_remote`, `alamat`, `no_task`, `vid`, `tanggal_task`, `provinsi`, `id_jenis_task`, `nama_kordinator`, `user_id`, `status_task`, `status_perbaikan`, `no_stamp`, `date_stamp`, `date_update`, `user_update`, `nama_task`, `sid`, `id_status_kordinator`) VALUES
-(4, 'asdsa', 'ASDASD', '1', 1, NULL, 'ASDADS', 1, 'asdadsd', 1, 'finish', 'asdasd', NULL, '', NULL, NULL, 'Asdf', '1', NULL),
-(5, 'ASNW', 'asdasdasdasd', '111111', 1, NULL, NULL, 1, 'asdasdasdad', 1, 'open', 'open', '1', '', NULL, NULL, 'Adududud', '2', NULL);
+(4, 'asdsa', 'ASDASD', '4', '1', NULL, 'ASDADS', 1, 'asdadsd', 1, 'finish', 'asdasd', NULL, '', NULL, NULL, 'Asdf', '1', NULL),
+(5, 'ASNW', 'asdasdasdasd', '5', '1', NULL, NULL, 1, 'asdasdasdad', 1, 'open', 'open', '1', '', NULL, NULL, 'Adududud', '2', NULL),
+(6, 'test', 'asdasdasd', '3', '1', NULL, 'asdadasd', 1, 'asdasd', 1, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -593,7 +604,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `cost_task`
@@ -641,7 +652,7 @@ ALTER TABLE `jenis_biaya`
 -- AUTO_INCREMENT for table `lokasi`
 --
 ALTER TABLE `lokasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `satelite`
@@ -659,13 +670,13 @@ ALTER TABLE `spd`
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`

@@ -941,7 +941,6 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
         $jsonDec = json_decode($data);
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
         $val2 = $jsonDec->Raw[0]->PARAM2[0];
-
         $model = Yii::$app->db->createCommand("UPDATE lokasi set kanwil=:kanwil, kanca_induk=:kancaInduk,alamat_install=:alamatInstall,provinsi=:provinsi, "
                         . "kota=:kota, jarkom_id=:idJarkom, satelite_id=:idSatelite,nama_pic=:namaPic,no_hp_pic=:noHpPic,hub=:hub,latitude=:latitude,longitude=:longitude, "
                         . "alamat_sekarang=:alamatSkrg, catatan=:catatan,flag_data_lokasi=:flagData,customer_pic_nama=:custPicNama,customer_pic_phone=:custPicPhone "
@@ -966,7 +965,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->bindValue(':vid', (int) substr($val2->WhereDatabaseinYou, (strlen($val2->WhereDatabaseinYou) - 1), (strlen($val2->WhereDatabaseinYou))))
                 ->execute();
-
+        
         $response = Yii::$app->getResponse();
         if ($model > 0) {
             $response->setStatusCode(200);
