@@ -535,7 +535,7 @@ class ApiController extends Controller {
             dtsk.iplan2 as IPLAN2, dtsk.subnetmask2 as subnetmask2, dtsk.hasil_test_alamat1 as HasilTestAlamat1, dtsk.success_test1 as SuccessTest1, 
             dtsk.loss_test1 as LossTest1, dtsk.keterangan_test1 as KeteranganTest1, dtsk.hasil_test_alamat2 as HasilTestAlamat2, dtsk.success_test2 as SuccessTest2,
             dtsk.loss_test2 as LossTest2, dtsk.keterangan_test2 as KeteranganTest2, dtsk.hasil_test_alamat3 as HasilTestAlamat3, dtsk.success_test3 as SuccessTest3, 
-            dtsk.loss_test3 as LossTest3, dtsk.keterangan_test3 as KeteranganTest3, s.tempat_penyimpanan_survey as TempatPenyimpananSurvey, s.status_hasil_survey as StatusHasilSurvey
+            dtsk.loss_test3 as LossTest3, dtsk.keterangan_test3 as KeteranganTest3, s.tempat_penyimpanan_survey as TempatPenyimpananSurvey, s.status_hasil_survey as StatusHasilSurvey, dtsk.source_listrik as SourceListrik
 
 FROM lokasi l
 LEFT JOIN task t on t.id = l.task_id
