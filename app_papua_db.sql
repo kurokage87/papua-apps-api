@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2019 at 08:39 AM
+-- Generation Time: Nov 23, 2019 at 11:57 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -53,8 +53,8 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id`, `task_id`, `nama_barang`, `type`, `SN`, `iplan`, `esnmodem`, `status`, `file_url`, `file_user_create`, `file_date_create`, `description`, `keterangan`, `date_create`, `user_create`, `jenis_barang`, `flag_data_barang`) VALUES
-(5, 4, NULL, NULL, NULL, '', NULL, 'terpasang', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(9, 5, NULL, NULL, NULL, '', NULL, 'rusak', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(5, 4, 'Remote', 'asd', '2a1sd21', '202.134.155', 'asdasd', 'terpasang', NULL, NULL, NULL, 'ASDasdasdasda', 'asdasdas', NULL, NULL, NULL, NULL),
+(9, 5, 'Tv', 'Elektronik', 'asd1a2sd1', '202.134.0.166', 'asdasd', 'rusak', NULL, NULL, NULL, 'asdasd', 'asdasdasd', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -222,7 +222,7 @@ CREATE TABLE `general_info` (
 --
 
 INSERT INTO `general_info` (`id`, `task_id`, `atm_id`, `IPLAN`, `tgl_berangkat`, `tgl_selesai_kerjaan`, `tgl_pulang`, `tgl_status_perbaikan`, `user_update`, `date_update`, `flag_general_info`) VALUES
-(3, 5, 1111, '202.121.22.2', '28-10-2019', '31-11-2019', '1-12-2019', '25-12-2019', 'admin', '25-12-2019', 'false');
+(3, 5, 1111, '202.121.22.2', '2019-10-28', '2019-12-01', '2019-12-01', '2019-12-25', 'ADMIN', '2018-09-28', '1');
 
 -- --------------------------------------------------------
 
@@ -297,8 +297,8 @@ CREATE TABLE `lokasi` (
 --
 
 INSERT INTO `lokasi` (`id`, `task_id`, `kanwil`, `kanca_induk`, `alamat_install`, `provinsi`, `kota`, `jarkom_id`, `satelite_id`, `nama_pic`, `no_hp_pic`, `hub`, `latitude`, `longitude`, `alamat_sekarang`, `catatan`, `flag_data_lokasi`, `customer_pic_nama`, `customer_pic_phone`, `laporan_pengaduan`) VALUES
-(3, 5, 'asdf', 'asf', 'alksndalsdnalskd', 'Jabar', 'Depok', 1, 2, 'asdads', '21', '321321', '32132', '312321', 'asdasdasd', 'asdasd', 'true', 'adadsa', '3213213', NULL),
-(4, 6, 'asdf', 'asf', 'alksndalsdnalskd', 'Jabar', 'Depok', 2, 2, '21', 'asdasd', 'APT 9', '32132', '312321', 'ciracas', 'bagus', '1', '21', '21', 'asdasd');
+(3, 5, 'asdf', 'asf', 'alksndalsdnalskd', 'Jabar', 'Depok', 1, 2, '21', 'asdads', 'APT 6', '32132', '312321', 'asdasdasd', 'coba', '1', '21', 'asdads', NULL),
+(4, 6, 'asdf', 'asf', 'alksndalsdnalskd', 'Jabar', 'Depok', 2, 2, '21', 'asdads', 'APT 9', '32132', '312321', 'ciracas', 'bagus', '1', '21', 'asdads', 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -369,18 +369,19 @@ CREATE TABLE `spd` (
   `yout_image_64_name` varchar(255) DEFAULT NULL,
   `your_image_64_file` text DEFAULT NULL,
   `iplan` varchar(255) DEFAULT NULL,
-  `cacatan_transaksi` varchar(255) NOT NULL
+  `cacatan_transaksi` varchar(255) NOT NULL,
+  `jenis_biaya` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `spd`
 --
 
-INSERT INTO `spd` (`id`, `flagconfirm`, `id_alamat`, `file_url`, `description`, `task_id`, `catatan_transaksi`, `jenis_biaya_id`, `nominal`, `tgl_input_biaya`, `sisa`, `status_spd`, `flagtime`, `flagupload`, `file_usercreate`, `file_datecreate`, `keterangan`, `yout_image_64_name`, `your_image_64_file`, `iplan`, `cacatan_transaksi`) VALUES
-(1, 'true', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'SPD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
-(3, 'false', '1', NULL, NULL, 4, 'asd', 2, 113213, NULL, NULL, 'SPD', NULL, NULL, NULL, NULL, 'asdasd', NULL, NULL, '202.134.0.155', 'asdasd'),
-(4, 'true', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'SPD-VID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
-(5, 'true', '1', NULL, NULL, 4, 'asd', 2, 113213, NULL, NULL, 'SPD-VID', NULL, NULL, NULL, NULL, 'asdasd', NULL, NULL, '202.134.0.155', 'asdasd');
+INSERT INTO `spd` (`id`, `flagconfirm`, `id_alamat`, `file_url`, `description`, `task_id`, `catatan_transaksi`, `jenis_biaya_id`, `nominal`, `tgl_input_biaya`, `sisa`, `status_spd`, `flagtime`, `flagupload`, `file_usercreate`, `file_datecreate`, `keterangan`, `yout_image_64_name`, `your_image_64_file`, `iplan`, `cacatan_transaksi`, `jenis_biaya`) VALUES
+(1, 'true', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'SPD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 'asd'),
+(3, 'false', '1', NULL, NULL, 4, 'asd', 2, 113213, NULL, NULL, 'SPD', NULL, NULL, NULL, NULL, 'asdasd', NULL, NULL, '202.134.0.155', 'asdasd', 'asdasd'),
+(4, 'true', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'SPD-VID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 'asdasd'),
+(5, 'true', '1', NULL, NULL, 4, 'asd', 2, 113213, NULL, NULL, 'SPD-VID', NULL, NULL, NULL, NULL, 'asdasd', NULL, NULL, '202.134.0.155', 'asdasd', 'zxczxc');
 
 -- --------------------------------------------------------
 
