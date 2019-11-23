@@ -971,13 +971,13 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
             $response->setStatusCode(200);
             return [
                 "Result" => "True",
-                "Data" => "Data Diubah"
+                "Data1" => "Data Diubah"
             ];
         } else {
             $response->setStatusCode(200);
             return [
                 "Result" => "False",
-                "Data" => "Data Tidak Diubah"
+                "Data1" => "Data Tidak Diubah"
             ];
         }
     }
