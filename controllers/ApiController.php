@@ -437,7 +437,7 @@ class ApiController extends Controller {
             $respon->setStatusCode(200);
             return [
                 'Result' => "False",
-                'Raw' => 'Data tidak ditemukan'
+                'Data1' => 'Data tidak ditemukan'
             ];
         }
     }
