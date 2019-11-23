@@ -908,7 +908,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
         $model = Yii::$app->db->createCommand("UPDATE general_info gi SET atm_id = :atm_id, tgl_berangkat = :tgl_berangkat, tgl_selesai_kerjaan = :tgl_selesai, tgl_pulang=:tgl_pulang,"
                         . " tgl_status_perbaikan=:tgl_perbaikan,user_update=:user,date_update=:date,flag_general_info=:flag"
                         . " WHERE task_id = (SELECT no_task FROM task WHERE no_task =  :noTask and vid = :vid)")
-                ->bindValue(':atm_id', $val1->idAtm)
+                ->bindValue(':atm_id', $val1->IdATM)
                 ->bindValue(':tgl_berangkat', $val1->TglBerangkat)
                 ->bindValue(':tgl_selesai', $val1->TglSelesaiKerjaan)
                 ->bindValue(':tgl_pulang', $val1->TglPulang)
@@ -925,13 +925,13 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
             $response->setStatusCode(200);
             return [
                 "Result" => "True",
-                "Data" => "Data Diubah"
+                "Data1" => "Data Diubah"
             ];
         } else {
             $response->setStatusCode(200);
             return [
                 "Result" => "False",
-                "Data" => "Data Tidak Diubah"
+                "Data1" => "Data Tidak Diubah"
             ];
         }
     }
