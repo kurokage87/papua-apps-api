@@ -849,7 +849,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 //                ->andWhere(['t.vid' => $vid])
 //                ->andWhere(['s.status_spd' => 'spd-vid'])
 //                ->all();
-        $model = Yii::$app->db->createCommand("SELECT IFNULL(s.flagconfirm, 'false') as flagconfirm, t.no_task as NoTask, t.vid as VID, t.nama_remote as NAMAREMOTE, s.iplan as IPLAN, t.alamat as ALAMAT, IFNULL(f.flag_upload_foto, 'false') as flagupload, t.nama_task as NamaTask, s.jenis_biaya as JenisBiaya FROM spd s 
+        $model = Yii::$app->db->createCommand("SELECT IFNULL(s.flagconfirm, 'false') as flagconfirm, t.no_task as NoTask, t.vid as VID, t.nama_remote as NAMAREMOTE, s.iplan as IPLAN, t.alamat as ALAMAT, IFNULL(f.flag_upload_foto, 'false') as flagupload, t.nama_task as NamaTask, s.jenis_biaya as jenisBiaya FROM spd s 
                 LEFT JOIN task t on t.id = s.task_id
                 LEFT JOIN user u on u.id = t.user_id
                 LEFT JOIN foto f on f.task_id = t.id
