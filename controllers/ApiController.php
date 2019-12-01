@@ -167,109 +167,123 @@ class ApiController extends Controller {
 
     public function actionInsertBarangTerpasang() {
         $data = Yii::$app->getRequest()->getRawBody();
-        $jsonDec = json_decode($data);
-        $val1 = $jsonDec->Raw[0]->PARAM1[0];
-        $val2 = $jsonDec->Raw[0]->PARAM2[0];
-        $val3 = $jsonDec->Raw[0]->PARAM3[0];
-//        \yii\helpers\VarDumper::dump($val3);die;
+        $val = json_decode($data);
 //        Upload Proses
-        $model = new \app\models\Barang();
-        $image = $val2->YourImage64File;
-
-        $folder = Yii::getAlias('@webroot/' . $val2->file_url);
-        $name = $val2->YourImage64Name;
-        $fileName = $name . '.jpg';
-        $filePath = $folder . '/' . $fileName;
-        $rawImage = $image;
-//        var_dump($filePath);die;
-        $removeHeader = explode(',', $rawImage);
-
-        $dec = base64_decode($removeHeader[1]);
-        file_put_contents($filePath, $dec);
-
-        $model->file_url = $filePath;
-        $model->nama_barang = $val1->NamaBarang;
-        $model->task_id = $val1->VID;
-        $model->type = $val1->Type;
-        $model->SN = $val1->SN;
-        $model->iplan = $val1->IPlan;
-        $model->status = $val1->Status;
-        $model->date_create = $val1->DateCreate;
-        $model->user_create = $val1->UserCreate;
-        $model->file_user_create = $val2->file_usercreate;
-        $model->file_date_create = $val2->file_datecreate;
-        $model->description = $val2->Description;
-        $model->keterangan = $val2->Keterangan;
-        $model->flag_data_barang = $val3->FlagDataBarang;
-        $model->jenis_barang = 'terpasang';
-
-//        Send input to database
-
-        $model->save();
-
+        $taskId = \app\models\Task::find()->where(['vid' => $val->VID])->andWhere(['no_task' => $val->NoTask])->one();
+//        \yii\helpers\VarDumper::dump($taskId);die;
         $respon = \Yii::$app->getResponse();
-        if ($model->save()) {
-            $respon->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => 'Data Berhasil Di input'
-            ];
+        if ($taskId > null) {
+//            \yii\helpers\VarDumper::dump($taskId->id);die;
+            $model = new \app\models\Barang();
+            $image = $val->YourImage64File;
+
+            $folder = Yii::getAlias('@webroot/' . $val->UploadFoto);
+            $name = $val->YourImage64Name;
+            $fileName = $name . '.jpg';
+            $filePath = $folder . '/' . $fileName;
+            $rawImage = $image;
+//            var_dump($filePath);die;
+            $removeHeader = explode(',', $rawImage);
+            $dec = base64_decode($removeHeader[1]);
+//            var_dump($dec);die;
+            file_put_contents($filePath, $dec);
+
+            $model->file_url = $filePath;
+            $model->nama_barang = $val->NamaBarang;
+            $model->task_id = $taskId->id;
+            $model->type = $val->Type;
+            $model->SN = $val->SN;
+            $model->iplan = $val->IPlan;
+            $model->status = $val->Status;
+            $model->date_create = $val->DateCreate;
+            $model->user_create = $val->UserCreate;
+            $model->file_user_create = $val->file_usercreate;
+            $model->file_date_create = $val->file_datecreate;
+            $model->description = $val->Description;
+            $model->keterangan = $val->Keterangan;
+            $model->flag_data_barang = $val->FlagDataBarang;
+            $model->jenis_barang = 'terpasang';
+            
+
+            $model->save();
+            if ($model->save()) {
+                $respon->setStatusCode(200);
+                return [
+                    "Result" => "True",
+                    "Data1" => 'Data Berhasil Di input'
+                ];
+            } else {
+                $respon->setStatusCode(200);
+                return [
+                    "Result" => "False",
+                    "Data1" => 'Data Gagal Di input'
+                ];
+            }
         } else {
             $respon->setStatusCode(200);
             return [
                 "Result" => "False",
-                "Data1" => 'Data Gagal Di input'
+                "Data1" => 'VID atau NoTask tidak ditemukan'
             ];
         }
     }
 
     public function actionInsertFoto() {
         $data = Yii::$app->getRequest()->getRawBody();
-        $jsonDec = json_decode($data);
-        $val1 = $jsonDec->Raw[0]->PARAM1[0];
-        $val2 = $jsonDec->Raw[0]->PARAM2[0];
-
-//        \yii\helpers\VarDumper::dump($val2);die;
-//        Upload Proses
-        $model = new \app\models\Foto();
-        $image = $val1->YourImage64File;
-
-        $folder = Yii::getAlias('@webroot/' . $val1->file_url);
-        $name = $val1->YourImage64Name;
-        $fileName = $name . '.jpg';
-        $filePath = $folder . '/' . $fileName;
-        $rawImage = $image;
-//        var_dump($filePath);die;
-        $removeHeader = explode(',', $rawImage);
-
-        $dec = base64_decode($removeHeader[1]);
-        file_put_contents($filePath, $dec);
-
-        $model->file_url = $filePath;
-        $model->file_usercreate = $val1->file_usercreate;
-        $model->flagtime = $val1->flagtime;
-        $model->task_id = $val1->VID;
-        $model->description = $val1->Description;
-        $model->keterangan = $val1->Keterangan;
-        $model->flag_upload_foto = $val2->FlagUploadPhoto;
-
-        $model->save();
-//        var_dump($model->save());
+        $val = json_decode($data);
+        
+        $taskId = \app\models\Task::find()->where(['vid' => $val->VID])->andWhere(['no_task' => $val->NoTask])->one();
+//        \yii\helpers\VarDumper::dump($taskId);die;
         $respon = \Yii::$app->getResponse();
+        if ($taskId > null) {
+//            \yii\helpers\VarDumper::dump($taskId->id);die;
+            $model = new \app\models\Foto();
+            $image = $val->YourImage64File;
 
-        if ($model->save() == true) {
-            $respon->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => "Foto Berhasil Di Input"
-            ];
+            $folder = Yii::getAlias('@webroot/' . $val->UploadFoto);
+            $name = $val->YourImage64Name;
+            $fileName = $name . '.jpg';
+            $filePath = $folder . '/' . $fileName;
+            $rawImage = $image;
+//            var_dump($filePath);die;
+            $removeHeader = explode(',', $rawImage);
+            $dec = base64_decode($removeHeader[1]);
+//            var_dump($dec);die;
+            file_put_contents($filePath, $dec);
+
+            $model->file_url = $filePath;
+            $model->task_id = $taskId->id;
+            $model->flagtime = $val->flagtime;
+            $model->file_usercreate = $val->file_usercreate;
+            $model->description = $val->Description;
+            $model->keterangan = $val->Keterangan;
+            $model->flag_upload_foto = $val->FlagUploadPhoto;
+            $model->your_image_64_file = $val->YourImage64File;
+            $model->your_image_64_name = $name;
+            
+
+            $model->save();
+            if ($model->save()) {
+                $respon->setStatusCode(200);
+                return [
+                    "Result" => "True",
+                    "Data1" => 'Data Berhasil Di input'
+                ];
+            } else {
+                $respon->setStatusCode(200);
+                return [
+                    "Result" => "False",
+                    "Data1" => 'Data Gagal Di input'
+                ];
+            }
         } else {
             $respon->setStatusCode(200);
             return [
                 "Result" => "False",
-                "Data1" => "Data Gagal Di Input"
+                "Data1" => 'VID atau NoTask tidak ditemukan'
             ];
         }
+        
     }
 
     public function actionInsertBarangRusak() {
@@ -800,7 +814,6 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 //                ->where(['t.vid' => $vid])
 //                ->andWhere(['s.status_spd' => 'spd-vid'])
 //                ->all();
-
 //        $model = (new \yii\db\Query())
 //                ->select('s.flagconfirm, s.id_alamat as ID, s.file_url, s.description as Description, t.vid as VID, t.no_task as NoTask, s.catatan_transaksi as CatatanTransaksi, 
 //                            jb.nama_jenis_biaya as JenisBiaya,s.tgl_input_biaya as TgnInputBiaya, s.sisa, t.vid, (
@@ -822,7 +835,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
             LEFT JOIN task t on t.id = s.task_id
             LEFT JOIN foto f on f.task_id = t.id
             LEFT JOIN jenis_biaya jb on jb.id = s.jenis_biaya_id
-            WHERE t.vid = ".$vid." AND s.status_spd = 'spd-vid'")->queryAll();
+            WHERE t.vid = " . $vid . " AND s.status_spd = 'spd-vid'")->queryAll();
         $respon = \Yii::$app->getResponse();
 
         if ($model != null) {
@@ -965,7 +978,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->bindValue(':vid', (int) substr($val2->WhereDatabaseinYou, (strlen($val2->WhereDatabaseinYou) - 1), (strlen($val2->WhereDatabaseinYou))))
                 ->execute();
-        
+
         $response = Yii::$app->getResponse();
         if ($model > 0) {
             $response->setStatusCode(200);
@@ -1256,18 +1269,17 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
         }
     }
 
-   public function actionForgetPassword($email){
-       $model = $model = \app\models\Users::findOne(['email' => $email]);
+    public function actionForgetPassword($email) {
+        $model = $model = \app\models\Users::findOne(['email' => $email]);
 //       \yii\helpers\VarDumper::dump($model);die;
-       $defaultPass = "papua123";
-       $model->password_hash = \Yii::$app->getSecurity()->generatePasswordHash($defaultPass);
-       $email = \Yii::$app->mailer->compose()
-                        ->setTo($email)
-                        ->setFrom([\Yii::$app->params['adminEmail'] => 'Papuan service robot'])
-                        ->setTextBody('Dear user '.$model->nama.' Lupa Password telah berhasil, saat ini password anda adalah "'.$defaultPass.'"<br> Regards   papuan')
-                        ->setSubject('Forgot Password')
-                        
-                        ->send();
+        $defaultPass = "papua123";
+        $model->password_hash = \Yii::$app->getSecurity()->generatePasswordHash($defaultPass);
+        $email = \Yii::$app->mailer->compose()
+                ->setTo($email)
+                ->setFrom([\Yii::$app->params['adminEmail'] => 'Papuan service robot'])
+                ->setTextBody('Dear user ' . $model->nama . ' Lupa Password telah berhasil, saat ini password anda adalah "' . $defaultPass . '"<br> Regards   papuan')
+                ->setSubject('Forgot Password')
+                ->send();
         $respon = Yii::$app->getResponse();
         if ($model->save() && $email) {
             $respon->setStatusCode(200);
@@ -1282,6 +1294,6 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 'Data1' => 'Password Gagal Diubah'
             ];
         }
-   }
-    
+    }
+
 }
