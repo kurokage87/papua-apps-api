@@ -169,7 +169,7 @@ class ApiController extends Controller {
         $data = Yii::$app->getRequest()->getRawBody();
         $val = json_decode($data);
         $dateNow = date("Y-m-d");
-        \yii\helpers\VarDumper::dump($dateNow);die;
+//        \yii\helpers\VarDumper::dump($dateNow);die;
 //        Upload Proses
         $taskId = \app\models\Task::find()->where(['vid' => $val->VID])->andWhere(['no_task' => $val->NoTask])->one();
 //        \yii\helpers\VarDumper::dump($taskId);die;
@@ -186,8 +186,8 @@ class ApiController extends Controller {
             $filePath = $folder . '/' . $fileName;
             $rawImage = $image;
 //            var_dump($filePath);die;
-            $removeHeader = explode(',', $rawImage);
-            $dec = base64_decode($removeHeader[1]);
+//            $removeHeader = explode(',', $rawImage);
+            $dec = base64_decode($rawImage);
 //            var_dump($dec);die;
             file_put_contents($filePath, $dec);
 
