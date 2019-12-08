@@ -168,6 +168,8 @@ class ApiController extends Controller {
     public function actionInsertBarangTerpasang() {
         $data = Yii::$app->getRequest()->getRawBody();
         $val = json_decode($data);
+        $dateNow = date("Y-m-d");
+        \yii\helpers\VarDumper::dump($dateNow);die;
 //        Upload Proses
         $taskId = \app\models\Task::find()->where(['vid' => $val->VID])->andWhere(['no_task' => $val->NoTask])->one();
 //        \yii\helpers\VarDumper::dump($taskId);die;
@@ -195,14 +197,14 @@ class ApiController extends Controller {
             $model->type = $val->Type;
             $model->SN = $val->SN;
             $model->iplan = $val->IPlan;
-            $model->status = $val->Status;
-            $model->date_create = $val->DateCreate;
-            $model->user_create = $val->UserCreate;
-            $model->file_user_create = $val->file_usercreate;
-            $model->file_date_create = $val->file_datecreate;
+            $model->status = "true";
+            $model->date_create = $dateNow;
+            $model->user_create = "BRISAT";
+            $model->file_user_create = "admin";
+            $model->file_date_create = $dateNow;
             $model->description = $val->Description;
             $model->keterangan = $val->Keterangan;
-            $model->flag_data_barang = $val->FlagDataBarang;
+            $model->flag_data_barang = "true";
             $model->jenis_barang = 'terpasang';
             
 
