@@ -197,7 +197,7 @@ class ApiController extends Controller {
             $model->type = $val->Type;
             $model->SN = $val->SN;
             $model->iplan = $val->IPlan;
-            $model->status = "true";
+            $model->status = "terpasang";
             $model->date_create = $dateNow;
             $model->user_create = "BRISAT";
             $model->file_user_create = "admin";
