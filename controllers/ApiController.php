@@ -294,42 +294,44 @@ class ApiController extends Controller {
 
     public function actionInsertBarangRusak() {
         $data = Yii::$app->getRequest()->getRawBody();
-        $jsonDec = json_decode($data);
-        $val1 = $jsonDec->Raw[0]->PARAM1[0];
-        $val2 = $jsonDec->Raw[0]->PARAM2[0];
-        $val3 = $jsonDec->Raw[0]->PARAM3[0];
-//        \yii\helpers\VarDumper::dump($val3);die;
+        $val = json_decode($data);
+        $dateNow = date("Y-m-d");
+//        \yii\helpers\VarDumper::dump($dateNow);die;
 //        Upload Proses
-        $model = new \app\models\Barang();
-        $image = $val2->YourImage64File;
+        $taskId = \app\models\Task::find()->where(['vid' => $val->VID])->andWhere(['no_task' => $val->NoTask])->one();
+//        \yii\helpers\VarDumper::dump($taskId);die;
+        $respon = \Yii::$app->getResponse();
+        if ($taskId > null) {
+//            \yii\helpers\VarDumper::dump($taskId->id);die;
+            $model = new \app\models\Barang();
+            $image = $val->YourImage64File;
 
-//        $folder = Yii::getAlias('@webroot/' . $val2->file_url);
-        $folder = Yii::getAlias('@webroot/upload');
-        $name = $val2->YourImage64Name;
-        $fileName = $name . '.jpg';
-        $filePath = $folder . '/' . $fileName;
-        $rawImage = $image;
-//        var_dump($filePath);die;
-//        $removeHeader = explode(',', $rawImage);
+//            $folder = Yii::getAlias('@webroot/' . $val->UploadFoto);
+            $folder = Yii::getAlias('@webroot/upload');
+            $name = $val->YourImage64Name;
+            $fileName = $name . '.jpg';
+            $filePath = $folder . '/' . $fileName;
+            $rawImage = $image;
+//            var_dump($filePath);die;
+//            $removeHeader = explode(',', $rawImage);
+            $dec = base64_decode($rawImage);
+//            var_dump($dec);die;
+            file_put_contents($filePath, $dec);
 
-//        $dec = base64_decode($removeHeader[1]);
-        $dec = base64_decode($rawImage);
-        file_put_contents($filePath, $dec);
-
-        $model->file_url = $filePath;
-        $model->nama_barang = $val1->NamaBarang;
-        $model->task_id = $val1->VID;
-        $model->type = $val1->Type;
-        $model->SN = $val1->SN;
-        $model->iplan = $val1->IPlan;
-        $model->status = $val1->Status;
-        $model->date_create = $val1->DateCreate;
-        $model->user_create = $val1->UserCreate;
-        $model->file_user_create = $val2->file_usercreate;
-        $model->file_date_create = $val2->file_datecreate;
-        $model->description = $val2->Description;
-        $model->keterangan = $val2->Keterangan;
-        $model->flag_data_barang = $val3->FlagDataBarang;
+            $model->file_url = $filePath;
+            $model->nama_barang = $val->NamaBarang;
+            $model->task_id = $taskId->id;
+            $model->type = $val->Type;
+            $model->SN = $val->SN;
+            $model->iplan = $val->IPlan;
+            $model->status = "terpasang";
+            $model->date_create = $dateNow;
+            $model->user_create = "BRISAT";
+            $model->file_user_create = "admin";
+            $model->file_date_create = $dateNow;
+            $model->description = $val->Description;
+            $model->keterangan = $val->Keterangan;
+            $model->flag_data_barang = "true";
         $model->jenis_barang = 'rusak';
 
 //        Send input to database
@@ -349,6 +351,7 @@ class ApiController extends Controller {
                 "Result" => "False",
                 "Data1" => 'Data Gagal Di input'
             ];
+        }
         }
     }
 
