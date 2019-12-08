@@ -177,7 +177,8 @@ class ApiController extends Controller {
             $model = new \app\models\Barang();
             $image = $val->YourImage64File;
 
-            $folder = Yii::getAlias('@webroot/' . $val->UploadFoto);
+//            $folder = Yii::getAlias('@webroot/' . $val->UploadFoto);
+            $folder = Yii::getAlias('@webroot/upload');
             $name = $val->YourImage64Name;
             $fileName = $name . '.jpg';
             $filePath = $folder . '/' . $fileName;
@@ -231,23 +232,26 @@ class ApiController extends Controller {
     public function actionInsertFoto() {
         $data = Yii::$app->getRequest()->getRawBody();
         $val = json_decode($data);
-        
+//        \yii\helpers\VarDumper::dump($val->VID);die;
         $taskId = \app\models\Task::find()->where(['vid' => $val->VID])->andWhere(['no_task' => $val->NoTask])->one();
-//        \yii\helpers\VarDumper::dump($taskId);die;
+
         $respon = \Yii::$app->getResponse();
         if ($taskId > null) {
 //            \yii\helpers\VarDumper::dump($taskId->id);die;
             $model = new \app\models\Foto();
             $image = $val->YourImage64File;
 
-            $folder = Yii::getAlias('@webroot/' . $val->UploadFoto);
+//            $folder = Yii::getAlias('@webroot/' . $val->UploadFoto);
+            $folder = Yii::getAlias('@webroot/upload');
             $name = $val->YourImage64Name;
-            $fileName = $name . '.jpg';
+//            $fileName = $name . '.jpg';
+            $fileName = $name;
             $filePath = $folder . '/' . $fileName;
             $rawImage = $image;
 //            var_dump($filePath);die;
-            $removeHeader = explode(',', $rawImage);
-            $dec = base64_decode($removeHeader[1]);
+//            $removeHeader = explode(',', $rawImage);
+//            $dec = base64_decode($removeHeader[1]);
+            $dec = base64_decode($rawImage);
 //            var_dump($dec);die;
             file_put_contents($filePath, $dec);
 
@@ -297,15 +301,17 @@ class ApiController extends Controller {
         $model = new \app\models\Barang();
         $image = $val2->YourImage64File;
 
-        $folder = Yii::getAlias('@webroot/' . $val2->file_url);
+//        $folder = Yii::getAlias('@webroot/' . $val2->file_url);
+        $folder = Yii::getAlias('@webroot/upload');
         $name = $val2->YourImage64Name;
         $fileName = $name . '.jpg';
         $filePath = $folder . '/' . $fileName;
         $rawImage = $image;
 //        var_dump($filePath);die;
-        $removeHeader = explode(',', $rawImage);
+//        $removeHeader = explode(',', $rawImage);
 
-        $dec = base64_decode($removeHeader[1]);
+//        $dec = base64_decode($removeHeader[1]);
+        $dec = base64_decode($rawImage);
         file_put_contents($filePath, $dec);
 
         $model->file_url = $filePath;
