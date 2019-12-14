@@ -1063,8 +1063,8 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 
 //        var_dump($val2);die;
         $model = Yii::$app->db->createCommand("UPDATE task SET vid=:vid , "
-//                        . "status_task = :statusTask, status_perbaikan = :statusPerbaikan, "
-                        . "status_perbaikan = :statusPerbaikan, "
+                        . "status_task = 'finish', status_perbaikan = :statusPerbaikan, "
+//                        . "status_perbaikan = :statusPerbaikan, "
                         . "date_stamp = :dateStamp, date_update = :dateUpdate, user_update = :userUpdate WHERE id = :noListTask and no_task = :noTask")
                 ->bindValue(':noListTask', $val->NoListTask)
                 ->bindValue(":vid", $val->VID)
