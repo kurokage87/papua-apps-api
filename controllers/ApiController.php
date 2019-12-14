@@ -1056,22 +1056,24 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 
     public function actionUpdateDataTask() {
         $data = Yii::$app->getRequest()->getRawBody();
-        $jsonDec = json_decode($data);
-        $val1 = $jsonDec->Raw[0]->PARAM1[0];
-        $val2 = $jsonDec->Raw[0]->PARAM2[0];
+        $val = json_decode($data);
+//        \yii\helpers\VarDumper::dump($jsonDec);die;
+//        $val1 = $jsonDec->Raw[0]->PARAM1[0];
+//        $val2 = $jsonDec->Raw[0]->PARAM2[0];
 
 //        var_dump($val2);die;
         $model = Yii::$app->db->createCommand("UPDATE task SET vid=:vid , "
-                        . "status_task = :statusTask, status_perbaikan = :statusPerbaikan, "
+//                        . "status_task = :statusTask, status_perbaikan = :statusPerbaikan, "
+                        . "status_perbaikan = :statusPerbaikan, "
                         . "date_stamp = :dateStamp, date_update = :dateUpdate, user_update = :userUpdate WHERE id = :noListTask and no_task = :noTask")
-                ->bindValue(':noListTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
-                ->bindValue(":vid", $val1->VID)
-                ->bindValue(":statusPerbaikan", $val1->IdStatusPerbaikan)
-                ->bindValue(":dateUpdate", $val1->DateUpdate)
-                ->bindValue(":userUpdate", $val1->UserUpdate)
-                ->bindValue(":statusTask", $val2->IdStatusTask)
-                ->bindValue(":dateStamp", $val2->DateStamp)
-                ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
+                ->bindValue(':noListTask', $val->NoListTask)
+                ->bindValue(":vid", $val->VID)
+                ->bindValue(":statusPerbaikan", $val->IdStatusPerbaikan)
+                ->bindValue(":dateUpdate", $val->DateUpdate)
+                ->bindValue(":userUpdate", $val->UserUpdate)
+//                ->bindValue(":statusTask", $val2->IdStatusTask)
+                ->bindValue(":dateStamp", $val->DateStamp)
+                ->bindValue(':noTask', $val->NoTask)
                 ->execute();
         $response = Yii::$app->getResponse();
         if ($model > 0) {

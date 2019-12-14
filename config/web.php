@@ -87,7 +87,8 @@ $config = [
                 'api/BarangFoto/<vid:\d+>' => 'api/list-barang-terpasang',
                 'api/forgotPass/<email:[^/]+>' => 'api/forget-password',
                 'api/ActionDataLokasi' => 'api/update-data-lokasi',
-                'api/ActionGeneralInfo' => 'api/update-general-info'
+                'api/ActionGeneralInfo' => 'api/update-general-info',
+                'api/ActionFinishtask' => 'api/update-data-task'
             ],
         ],
 
