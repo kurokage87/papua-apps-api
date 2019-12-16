@@ -1053,6 +1053,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
             ];
         }
     }
+    
 
     public function actionUpdateDataTask() {
         $data = Yii::$app->getRequest()->getRawBody();
@@ -1062,11 +1063,19 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 //        $val2 = $jsonDec->Raw[0]->PARAM2[0];
 
 //        var_dump($val2);die;
-        $model = Yii::$app->db->createCommand("UPDATE task SET vid=:vid , "
-                        . "status_task = 'finish', status_perbaikan = :statusPerbaikan, "
+//        UPDATE task t, general_info gi, data_teknisi dtk, detail_task dt, lokasi l, survey s SET t.status_task = 'finish', t.status_perbaikan='finish', gi.flag_general_info='4',dtk.flag_data_teknis='4', dt.flag_data_instalasi='4', l.flag_data_lokasi='4', s.flag_data_survey='4' 
+//WHERE t.id = '5' and t.no_task='5'
+//        $model = Yii::$app->db->createCommand("UPDATE task SET vid=:vid , "
+//                        . "status_task = '4', status_perbaikan = :statusPerbaikan, "
 //                        . "status_perbaikan = :statusPerbaikan, "
-                        . "date_stamp = :dateStamp, date_update = :dateUpdate, user_update = :userUpdate WHERE id = :noListTask and no_task = :noTask")
-                ->bindValue(':noListTask', $val->NoListTask)
+//                        . "date_stamp = :dateStamp, date_update = :dateUpdate, user_update = :userUpdate WHERE id = :noListTask and no_task = :noTask")
+        $model = Yii::$app->db->createCommand("UPDATE task t, general_info gi, data_teknisi dtk, detail_task dt, lokasi l, survey s SET
+                t.status_task = 'finish', t.status_perbaikan='finish', gi.flag_general_info='4', dtk.flag_data_teknis='4', dt.flag_data_instalasi='4', 
+                l.flag_data_lokasi='4', s.flag_data_survey='4', t.vid = :vid, t.date_stamp = :dateStamp, t.date_update = :dateUpdate, 
+                t.user_update =:userUpdate
+                WHERE t.id = :noListTask and t.no_task=:noTask and gi.task_id=:noListTask and dtk.task_id=:noListTask and dt.task_id=:noListTask and 
+                l.task_id=:noListTask AND s.task_id=:noListTask")
+                ->bindValue(":noListTask", $val->NoListTask)
                 ->bindValue(":vid", $val->VID)
                 ->bindValue(":statusPerbaikan", $val->IdStatusPerbaikan)
                 ->bindValue(":dateUpdate", $val->DateUpdate)
