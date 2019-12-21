@@ -939,7 +939,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(':tgl_perbaikan', $val1->TglStatusPerbaikan)
                 ->bindValue(':user', $val1->UserUpdate)
                 ->bindValue(':date', $val1->DateUpdate)
-                ->bindValue(':flag', $val1->FlagGeneralInfo)
+                ->bindValue(':flag', "true")
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->bindValue(':vid', (int) substr($val2->WhereDatabaseinYou, (strlen($val2->WhereDatabaseinYou) - 1), (strlen($val2->WhereDatabaseinYou))))
                 ->execute();
@@ -983,7 +983,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(":longitude", $val1->Longitude)
                 ->bindValue(":alamatSkrg", $val1->AlamatSekarang)
                 ->bindValue(":catatan", $val1->Catatan)
-                ->bindValue(":flagData", $val1->FlagDataLokasi)
+                ->bindValue(":flagData", "true")
                 ->bindValue(":custPicNama", $val2->CustPIC)
                 ->bindValue(":custPicPhone", $val2->CustPIC_Phone)
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
@@ -1034,7 +1034,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(":kondisiBangunan", $val1->KondisiBangungan)
                 ->bindValue(":analisa", $val1->AnalisaProblem)
                 ->bindValue(":aktifitas", $val1->AktifitasSolusi)
-                ->bindValue(":flag", $val1->FlagDataTeknis)
+                ->bindValue(":flag", "true")
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->execute();
 
@@ -1070,8 +1070,8 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 //                        . "status_perbaikan = :statusPerbaikan, "
 //                        . "date_stamp = :dateStamp, date_update = :dateUpdate, user_update = :userUpdate WHERE id = :noListTask and no_task = :noTask")
         $model = Yii::$app->db->createCommand("UPDATE task t, general_info gi, data_teknisi dtk, detail_task dt, lokasi l, survey s SET
-                t.status_task = 'finish', t.status_perbaikan='finish', gi.flag_general_info='4', dtk.flag_data_teknis='4', dt.flag_data_instalasi='4', 
-                l.flag_data_lokasi='4', s.flag_data_survey='4', t.vid = :vid, t.date_stamp = :dateStamp, t.date_update = :dateUpdate, 
+                t.status_task = 'finish', t.status_perbaikan='finish', gi.flag_general_info='finish', dtk.flag_data_teknis='finish', dt.flag_data_instalasi='finish', 
+                l.flag_data_lokasi='finish', s.flag_data_survey='finish', t.vid = :vid, t.date_stamp = :dateStamp, t.date_update = :dateUpdate, 
                 t.user_update =:userUpdate
                 WHERE t.id = :noListTask and t.no_task=:noTask and gi.task_id=:noListTask and dtk.task_id=:noListTask and dt.task_id=:noListTask and 
                 l.task_id=:noListTask AND s.task_id=:noListTask")
@@ -1131,7 +1131,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue("arahAntena", $val1->ArahAntenaSurvey)
                 ->bindValue("ketSurvey", $val1->KeteranganSurvey)
                 ->bindValue("statusHasil", $val1->StatusHasilSurvey)
-                ->bindValue("flag", $val1->FlagDataSurvey)
+                ->bindValue("flag", "true")
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->execute();
 
@@ -1168,7 +1168,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
             kabel_roll = :kabelRoll, perangkat_ke_ups = :perangkatUps, frequency_band_modulation = :frequency
 
             WHERE task_id = (SELECT id FROM task WHERE no_task = :noTask)")
-                ->bindValue("flag", $val1->FlagDataInstallasi)
+                ->bindValue("flag", "true")
                 ->bindValue("diameterAntena", $val1->DiameterAntena)
                 ->bindValue("polarArah", $val1->PolarisasiArahAntena)
                 ->bindValue("elevasiArah", $val1->ElevasiArahAntena)
