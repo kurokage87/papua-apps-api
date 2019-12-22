@@ -976,7 +976,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 l.no_hp_pic=:noHpPic, l.hub=:hub, 
                 l.latitude=:latitude, l.longitude=:longitude, l.alamat_sekarang=:alamatSkrg, 
                 l.catatan=:catatan, l.flag_data_lokasi='true', l.customer_pic_nama=:custPicNama, l.customer_pic_phone=:custPicPhone 
-                WHERE l.task_id = (SELECT id from task WHERE no_task =:noTask and vid=:vid) and t.id = :noTask")
+                WHERE l.task_id = :vid and t.no_task=:noTask and t.id = :noTask")
                 ->bindValue(":kanwil", $val1->KANWIL)
                 ->bindValue(":kancaInduk", $val1->KANCAINDUK)
                 ->bindValue(":alamatInstall", $val1->ALAMAT)
