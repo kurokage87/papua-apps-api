@@ -958,12 +958,25 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
     public function actionUpdateDataLokasi() {
         $data = Yii::$app->getRequest()->getRawBody();
         $jsonDec = json_decode($data);
+//        \yii\helpers\VarDumper::dump($jsonDec);die;
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
         $val2 = $jsonDec->Raw[0]->PARAM2[0];
-        $model = Yii::$app->db->createCommand("UPDATE lokasi set kanwil=:kanwil, kanca_induk=:kancaInduk,alamat_install=:alamatInstall,provinsi=:provinsi, "
-                        . "kota=:kota, jarkom_id=:idJarkom, satelite_id=:idSatelite,nama_pic=:namaPic,no_hp_pic=:noHpPic,hub=:hub,latitude=:latitude,longitude=:longitude, "
-                        . "alamat_sekarang=:alamatSkrg, catatan=:catatan,flag_data_lokasi=:flagData,customer_pic_nama=:custPicNama,customer_pic_phone=:custPicPhone "
-                        . "WHERE task_id = (SELECT id from task WHERE no_task =:noTask and vid=:vid)")
+//        UPDATE lokasi l, task t set t.nama_remote="udel", l.kanwil='papua', 
+//                l.kanca_induk='asd', l.alamat_install='asdasd', 
+//                l.provinsi='papua', l.kota='adasd', l.jarkom_id='asdadsd', 
+//                l.jarkom_id=1,l.satelite_id=1, l.nama_pic='adasdvvv', 
+//                l.no_hp_pic='adasdhh', l.hub='adasagd', 
+//                l.latitude='adasd', l.longitude='adasdbb', l.alamat_sekarang='adasdbbbbbb', 
+//                l.catatan='adasdwwww', l.flag_data_lokasi='true', l.customer_pic_nama='bedu', l.customer_pic_phone='asdagfgd' 
+//                WHERE l.task_id = (SELECT id from task WHERE no_task ='1' and vid='1') and t.id = '1'
+        $model = Yii::$app->db->createCommand("UPDATE lokasi l, task t set t.nama_remote=:namaRemote, l.kanwil=:kanwil, 
+                l.kanca_induk=:kancaInduk, l.alamat_install=:alamatInstall, 
+                l.provinsi=:provinsi, l.kota=:kota, l.jarkom_id=:idJarkom, 
+                l.satelite_id=:idSatelite, l.nama_pic=:namaPic, 
+                l.no_hp_pic=:noHpPic, l.hub=:hub, 
+                l.latitude=:latitude, l.longitude=:longitude, l.alamat_sekarang=:alamatSkrg, 
+                l.catatan=:catatan, l.flag_data_lokasi='true', l.customer_pic_nama=:custPicNama, l.customer_pic_phone=:custPicPhone 
+                WHERE l.task_id = (SELECT id from task WHERE no_task =:noTask and vid=:vid) and t.id = :noTask")
                 ->bindValue(":kanwil", $val1->KANWIL)
                 ->bindValue(":kancaInduk", $val1->KANCAINDUK)
                 ->bindValue(":alamatInstall", $val1->ALAMAT)
@@ -979,6 +992,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(":alamatSkrg", $val1->AlamatSekarang)
                 ->bindValue(":catatan", $val1->Catatan)
                 ->bindValue(":flagData", "true")
+                ->bindValue(":namaRemote", $val2->NAMAREMOTE)
                 ->bindValue(":custPicNama", $val2->CustPIC)
                 ->bindValue(":custPicPhone", $val2->CustPIC_Phone)
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
