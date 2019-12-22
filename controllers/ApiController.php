@@ -932,7 +932,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 
         $model = Yii::$app->db->createCommand("UPDATE general_info gi, task t SET gi.atm_id = :atm_id, gi.tgl_berangkat = :tgl_berangkat, gi.tgl_selesai_kerjaan = :tgl_selesai, gi.tgl_pulang=:tgl_pulang,"
                         . " gi.tgl_status_perbaikan=:tgl_perbaikan, gi.user_update=:user, gi.date_update=:date, gi.flag_general_info=:flag"
-                        . " WHERE gi.task_id = :vid and t.no_task=:noTask")
+                        . " WHERE gi.task_id = t.id and t.vid=:vid and t.no_task=:noTask")
                 ->bindValue(':atm_id', $val1->IdATM)
                 ->bindValue(':tgl_berangkat', $val1->TglBerangkat)
                 ->bindValue(':tgl_selesai', $val1->TglSelesaiKerjaan)
@@ -961,22 +961,24 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 //        \yii\helpers\VarDumper::dump($jsonDec);die;
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
         $val2 = $jsonDec->Raw[0]->PARAM2[0];
-//        UPDATE lokasi l, task t set t.nama_remote="udel", l.kanwil='papua', 
-//                l.kanca_induk='asd', l.alamat_install='asdasd', 
-//                l.provinsi='papua', l.kota='adasd', l.jarkom_id='asdadsd', 
-//                l.jarkom_id=1,l.satelite_id=1, l.nama_pic='adasdvvv', 
-//                l.no_hp_pic='adasdhh', l.hub='adasagd', 
-//                l.latitude='adasd', l.longitude='adasdbb', l.alamat_sekarang='adasdbbbbbb', 
-//                l.catatan='adasdwwww', l.flag_data_lokasi='true', l.customer_pic_nama='bedu', l.customer_pic_phone='asdagfgd' 
-//                WHERE l.task_id = (SELECT id from task WHERE no_task ='1' and vid='1') and t.id = '1'
-        $model = Yii::$app->db->createCommand("UPDATE lokasi l, task t set t.nama_remote=:namaRemote, l.kanwil=:kanwil, 
+//        UPDATE task t, lokasi l
+//INNER JOIN (SELECT id, nama_remote, vid, no_task from task WHERE no_task=1 and vid=1) tsk on tsk.id = l.task_id
+//SET t.nama_remote='Argi', l.kanwil='asdf111',l.kanca_induk='asf11', 
+//l.alamat_install='depok11', l.provinsi='Jabar11', l.kota='Depok11', 
+//l.jarkom_id=2, l.satelite_id=1, l.nama_pic='Argi', l.no_hp_pic='11111', l.hub='APT 6', 
+//l.latitude='32132', l.longitude='312321', l.alamat_sekarang='asdasdasd', l.catatan='coba', 
+//l.flag_data_lokasi='true', l.customer_pic_nama='21', l.customer_pic_phone='asdads'
+//WHERE tsk.no_task=1 and tsk.vid=1 and l.task_id = tsk.id and t.no_task=1
+        $model = Yii::$app->db->createCommand("UPDATE task t, lokasi l
+                INNER JOIN (SELECT id, nama_remote, vid, no_task from task WHERE no_task=:noTask and vid=:vid) tsk on tsk.id = l.task_id
+                SET t.nama_remote=:namaRemote, l.kanwil=:kanwil, 
                 l.kanca_induk=:kancaInduk, l.alamat_install=:alamatInstall, 
                 l.provinsi=:provinsi, l.kota=:kota, l.jarkom_id=:idJarkom, 
                 l.satelite_id=:idSatelite, l.nama_pic=:namaPic, 
                 l.no_hp_pic=:noHpPic, l.hub=:hub, 
                 l.latitude=:latitude, l.longitude=:longitude, l.alamat_sekarang=:alamatSkrg, 
                 l.catatan=:catatan, l.flag_data_lokasi='true', l.customer_pic_nama=:custPicNama, l.customer_pic_phone=:custPicPhone 
-                WHERE l.task_id = :vid and t.no_task=:noTask and t.id = :noTask")
+                WHERE tsk.no_task=:noTask and tsk.vid=:vid and l.task_id = tsk.id and t.no_task=:noTask")
                 ->bindValue(":kanwil", $val1->KANWIL)
                 ->bindValue(":kancaInduk", $val1->KANCAINDUK)
                 ->bindValue(":alamatInstall", $val1->ALAMAT)
@@ -1011,11 +1013,11 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
         $data = Yii::$app->getRequest()->getRawBody();
         $jsonDec = json_decode($data);
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
-        $model = Yii::$app->db->createCommand("UPDATE data_teknisi SET fail_hw=:failHw, sqf=:sqf, initial_esno=:esno, carrier_to_noice=:noice, 
-            hasil_xpoll=:xpoll,cpi=:cpi,operator_satelite=:opSatelite,operator_helpdesk=:opHelp,out_pln=:outPln,out_ups=:outUps,
-            ups_for_backup=:upsBack, suhu_ruangan=:suhu, type_mounting=:type, panjang_kabel=:pKabel, letak_antena=:letakAntena, letak_modem=:letakModem, kondisi_bangunan=:kondisiBangunan, 
-            analisa_problem=:analisa,aktifitas_solusi=:aktifitas,flag_data_teknis=:flag
-            where task_id = (SELECT id from task WHERE no_task = :noTask)")
+        $model = Yii::$app->db->createCommand("UPDATE data_teknisi dt, task t SET dt.fail_hw=:failHw, dt.sqf=:sqf, dt.initial_esno=:esno, dt.carrier_to_noice=:noice, 
+            dt.hasil_xpoll=:xpoll, dt.cpi=:cpi, dt.operator_satelite=:opSatelite, dt.operator_helpdesk=:opHelp, dt.out_pln=:outPln, dt.out_ups=:outUps,
+            dt.ups_for_backup=:upsBack, dt.suhu_ruangan=:suhu, dt.type_mounting=:type, dt.panjang_kabel=:pKabel, dt.letak_antena=:letakAntena, dt.letak_modem=:letakModem, dt.kondisi_bangunan=:kondisiBangunan, 
+            dt.analisa_problem=:analisa, dt.aktifitas_solusi=:aktifitas, dt.flag_data_teknis=:flag
+            where dt.task_id = t.id and t.no_task = :noTask")
                 ->bindValue(":failHw", $val1->FAIL_HW)
                 ->bindValue(":sqf", $val1->SQF)
                 ->bindValue(":esno", $val1->INITIAL_ESNO)
@@ -1090,13 +1092,13 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
         $jsonDec = json_decode($data);
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
 
-        $model = Yii::$app->db->createCommand("UPDATE survey SET alamat_pengiriman_survey = :alamatSurvey, tempat_penyimpanan_survey = :tmptSimpanSurvey, 
-            nama_pic_survey = :picSurveyNama, kontsk_pic_survey = :kontakPicSurvey, penempatan_grounding_survey = :penempatanGround, ukuran_antena_survey = :ukuranAntena, 
-            tempat_antena_survey = :tempatAntena, kekuatan_roof_survey = :kekuatanRoof, jenis_mounting_survey = :jenisMounting, latitude_survey =:latitude, 
-            longitude_survey = :longitude, listrik_awal_survey = :listrikAwal,sarpen_aci_indoor = :sarpenAci, sarpen_ups_survey = :sarpenUps, 
-            panjang_kabel_survey = :panjangKabel, type_kabel_survey = :typeKabel, arah_antena_survey = :arahAntena, keterangan_survey = :ketSurvey, 
-            status_hasil_survey = :statusHasil, flag_data_survey = :flag
-            WHERE task_id = (SELECT id FROM task WHERE no_task = :noTask)")
+        $model = Yii::$app->db->createCommand("UPDATE survey s, task t SET s.alamat_pengiriman_survey = :alamatSurvey, s.tempat_penyimpanan_survey = :tmptSimpanSurvey, 
+            s.nama_pic_survey = :picSurveyNama, s.kontsk_pic_survey = :kontakPicSurvey, s.penempatan_grounding_survey = :penempatanGround, s.ukuran_antena_survey = :ukuranAntena, 
+            s.tempat_antena_survey = :tempatAntena, s.kekuatan_roof_survey = :kekuatanRoof, s.jenis_mounting_survey = :jenisMounting, s.latitude_survey =:latitude, 
+            s.longitude_survey = :longitude, s.listrik_awal_survey = :listrikAwal, s.sarpen_aci_indoor = :sarpenAci, s.sarpen_ups_survey = :sarpenUps, 
+            s.panjang_kabel_survey = :panjangKabel, s.type_kabel_survey = :typeKabel, s.arah_antena_survey = :arahAntena, s.keterangan_survey = :ketSurvey, 
+            s.status_hasil_survey = :statusHasil, s.flag_data_survey = :flag
+            WHERE s.task_id = t.id and t.no_task = :noTask")
                 ->bindValue("alamatSurvey", $val1->AlamatPengirimanSurvey)
                 ->bindValue("tmptSimpanSurvey", $val1->TempatPenyimpananSurvey)
                 ->bindValue("picSurveyNama", $val1->NamaPICSurvey)
@@ -1134,17 +1136,19 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
         $val1 = $jsonDec->Raw[0]->PARAM1[0];
 
 //        var_dump($val1);die;
-        $model = Yii::$app->db->createCommand("UPDATE detail_task SET flag_data_instalasi = :flag, diameter_antena = :diameterAntena, 
-            polarisasi_arah_antena =:polarArah, elevasi_arah_antena =:elevasiArah, azimuth_arah_antena =:azimuthArah, kvaups =:kvaups, ip_management = :ipMan, 
-            receive_symbole_rate =:receiveSymbole, phase_netral_pln =:phaseNetPln, phase_netral_ups =:phaseNetUps, phase_netral_genset =:phaseNetGenset, 
-            phase_ground_pln =:phaeGrouPln, phase_ground_ups=:phaseGrouUps, phase_ground_genset =:phaseGrouGenset,netral_ground_pln =:netGrouPln, 
-            netral_ground_ups =:netGrouUps, netral_ground_genset =:netGrouGenset, satelite_longitude =:satLong, iplan1 = :ipLan1, subnetmask1 =:subnet1, 
-            iplan2 = :ipLan2, subnetmask2 = :subnet2, hasil_test_alamat1 =:hasilTestAlmt1, success_test1 = :succes1, loss_test1 = :loss1, 
-            keterangan_test1 = :ket1, hasil_test_alamat2 = :hasilTestAlmt2, success_test2 = :succes2, loss_test2 =:loss2, keterangan_test2 =:ket2, 
-            hasil_test_alamat3 =:hasilTestAlmt3, success_test3 =:succes3, loss_test3 =:loss3, keterangan_test3 =:ket3, source_listrik = :sourceListrik, 
-            kabel_roll = :kabelRoll, perangkat_ke_ups = :perangkatUps, frequency_band_modulation = :frequency
-
-            WHERE task_id = (SELECT id FROM task WHERE no_task = :noTask)")
+        $model = Yii::$app->db->createCommand("UPDATE detail_task dt
+            inner join (select id,no_task,vid from task where no_task= :noTask) idtask on dt.task_id = idTask.id
+            SET dt.flag_data_instalasi = :flag, dt.diameter_antena = :diameterAntena, 
+            dt.polarisasi_arah_antena =:polarArah, dt.elevasi_arah_antena =:elevasiArah, dt.azimuth_arah_antena =:azimuthArah, dt.kvaups =:kvaups, dt.ip_management = :ipMan, 
+            dt.receive_symbole_rate =:receiveSymbole, dt.phase_netral_pln =:phaseNetPln, dt.phase_netral_ups =:phaseNetUps, dt.phase_netral_genset =:phaseNetGenset, 
+            dt.phase_ground_pln =:phaeGrouPln, dt.phase_ground_ups=:phaseGrouUps, dt.phase_ground_genset =:phaseGrouGenset, dt.netral_ground_pln =:netGrouPln, 
+            dt.netral_ground_ups =:netGrouUps, dt.netral_ground_genset =:netGrouGenset, dt.satelite_longitude =:satLong, dt.iplan1 = :ipLan1, dt.subnetmask1 =:subnet1, 
+            dt.iplan2 = :ipLan2, dt.subnetmask2 = :subnet2, dt.hasil_test_alamat1 =:hasilTestAlmt1, dt.success_test1 = :succes1, dt.loss_test1 = :loss1, 
+            dt.keterangan_test1 = :ket1, dt.hasil_test_alamat2 = :hasilTestAlmt2, dt.success_test2 = :succes2, dt.loss_test2 =:loss2, dt.keterangan_test2 =:ket2, 
+            dt.hasil_test_alamat3 =:hasilTestAlmt3, dt.success_test3 =:succes3, dt.loss_test3 =:loss3, dt.keterangan_test3 =:ket3, dt.source_listrik = :sourceListrik, 
+            dt.kabel_roll = :kabelRoll, dt.perangkat_ke_ups = :perangkatUps, dt.frequency_band_modulation = :frequency
+            
+            WHERE idTask.no_task = :noTask")
                 ->bindValue("flag", "true")
                 ->bindValue("diameterAntena", $val1->DiameterAntena)
                 ->bindValue("polarArah", $val1->PolarisasiArahAntena)
