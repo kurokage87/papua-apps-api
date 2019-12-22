@@ -930,9 +930,9 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 //        UPDATE general_info gi SET atm_id = 1, tgl_berangkat = '2019-10-11', tgl_selesai_kerjaan = '2019-10-15', tgl_pulang='2019-10-16', tgl_status_perbaikan='2019-10-17',user_update='ARGI',date_update='2019-10-18',flag_general_info='asdf'
 //WHERE task_id = (SELECT no_task FROM task WHERE id = 1 and vid = 2)
 
-        $model = Yii::$app->db->createCommand("UPDATE general_info gi SET atm_id = :atm_id, tgl_berangkat = :tgl_berangkat, tgl_selesai_kerjaan = :tgl_selesai, tgl_pulang=:tgl_pulang,"
-                        . " tgl_status_perbaikan=:tgl_perbaikan,user_update=:user,date_update=:date,flag_general_info=:flag"
-                        . " WHERE task_id = (SELECT no_task FROM task WHERE no_task =  :noTask and vid = :vid)")
+        $model = Yii::$app->db->createCommand("UPDATE general_info gi, task t SET gi.atm_id = :atm_id, gi.tgl_berangkat = :tgl_berangkat, gi.tgl_selesai_kerjaan = :tgl_selesai, gi.tgl_pulang=:tgl_pulang,"
+                        . " gi.tgl_status_perbaikan=:tgl_perbaikan, gi.user_update=:user, gi.date_update=:date, gi.flag_general_info=:flag"
+                        . " WHERE gi.task_id = :vid and t.no_task=:noTask")
                 ->bindValue(':atm_id', $val1->IdATM)
                 ->bindValue(':tgl_berangkat', $val1->TglBerangkat)
                 ->bindValue(':tgl_selesai', $val1->TglSelesaiKerjaan)
