@@ -982,8 +982,8 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(":alamatInstall", $val1->ALAMAT)
                 ->bindValue(":provinsi", $val1->PROVINSI)
                 ->bindValue(":kota", $val1->KOTA)
-                ->bindValue(":idJarkom", $val1->IdJarkom)
-                ->bindValue(":idSatelite", $val1->IdSatelite)
+                ->bindValue(":idJarkom", (int)$val1->IdJarkom)
+                ->bindValue(":idSatelite", (int)$val1->IdSatelite)
                 ->bindValue(":namaPic", $val1->PIC)
                 ->bindValue(":noHpPic", $val1->NoHpPic)
                 ->bindValue(":hub", $val1->Hub)
@@ -998,7 +998,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->bindValue(':vid', (int) substr($val2->WhereDatabaseinYou, (strlen($val2->WhereDatabaseinYou) - 1), (strlen($val2->WhereDatabaseinYou))))
                 ->execute();
-
+        \yii\helpers\VarDumper::dump($model);die;
         $response = Yii::$app->getResponse();
         $response->setStatusCode(200);
         return [
