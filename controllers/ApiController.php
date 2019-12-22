@@ -998,7 +998,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(':noTask', (int) substr($val1->WhereDatabaseinYou, (strlen($val1->WhereDatabaseinYou) - 1), (strlen($val1->WhereDatabaseinYou))))
                 ->bindValue(':vid', (int) substr($val2->WhereDatabaseinYou, (strlen($val2->WhereDatabaseinYou) - 1), (strlen($val2->WhereDatabaseinYou))))
                 ->execute();
-        \yii\helpers\VarDumper::dump($model);die;
+//        \yii\helpers\VarDumper::dump($model);die;
         $response = Yii::$app->getResponse();
         $response->setStatusCode(200);
         return [
