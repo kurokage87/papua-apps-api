@@ -538,7 +538,7 @@ class ApiController extends Controller {
             gi.tgl_berangkat as TglBerangkat, gi.tgl_selesai_kerjaan as TglSelesaiKerjaan, gi.tgl_pulang as TglPulang, gi.tgl_status_perbaikan as TglStatusPerbaikan, 
             l.catatan as CatatanKoordinator, t.id_status_kordinator as IdStatusKoordinator , gi.atm_id as IdATM ,IFNULL(gi.flag_general_info, 'false') as FlagGeneralInfo, 
             IFNULL(dt.flag_data_teknis, 'false') as FlagDataTeknis, IFNULL(s.flag_data_survey, 'false') as FlagDataSurvey, IFNULL(f.flag_upload_foto, 'false') as FlagUploadFoto, 
-            t.sid as SID,IFNULL(dtsk.flag_data_instalasi, 'false') as FlagDataInstalasi, IFNULL(b.flag_data_barang, 'false') as FlagDataBarang, t.id_jenis_task as idJenisTask1, 
+            t.sid as SID,IFNULL(dtsk.flag_data_instalasi, 'false') as FlagDataInstalasi, IFNULL(b.flag_data_barang, 'false') as FlagDataBarang, jt.deskripsi as idJenisTask1, 
             dtsk.id_status_perbaikan as IdStatusPerbaikan, l.alamat_sekarang as alamatSekarang, t.vid as VID1, t.nama_remote as NAMAREMOTE, l.alamat_install as ALAMAT,
             l.kanwil as KANWIL, l.kanca_induk as KANCAINDUK, l.nama_pic as NoHpPic, l.no_hp_pic as PIC, l.kota as KOTA, l.jarkom_id as IdJarkom, l.satelite_id as IdSatelite, 
             l.latitude as Latitude, l.longitude as Longitude, t.no_task as NoTask, l.catatan as Catatan, l.hub as Hub, l.provinsi as Provinsi,
@@ -572,6 +572,7 @@ LEFT JOIN survey s on s.task_id = t.id
 LEFT JOIN foto f on f.task_id = t.id
 LEFT JOIN detail_task dtsk ON dtsk.task_id = t.id
 LEFT JOIN user u on u.id = t.user_id
+LEFT JOIN jenis_task jt on jt.id = t.id_jenis_task
 WHERE l.task_id = t.id and t.id = " . $id . " and u.nik = '" . $nik . "'")->queryAll();
 //        \yii\helpers\VarDumper::dump($model);die;
         $respon = \Yii::$app->getResponse();
@@ -945,19 +946,13 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->execute();
 
         $response = Yii::$app->getResponse();
-        if ($model > 0) {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => "Data Diubah"
-            ];
-        } else {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "False",
-                "Data1" => "Data Tidak Diubah"
-            ];
-        }
+        
+        $response->setStatusCode(200);
+        return [
+            "Result" => "True",
+            "Data1" => "Data Diubah"
+        ];
+        
     }
 
     public function actionUpdateDataLokasi() {
@@ -991,19 +986,11 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->execute();
 
         $response = Yii::$app->getResponse();
-        if ($model > 0) {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => "Data Diubah"
-            ];
-        } else {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "False",
-                "Data1" => "Data Tidak Diubah"
-            ];
-        }
+        $response->setStatusCode(200);
+        return [
+            "Result" => "True",
+            "Data1" => "Data Diubah"
+        ];
     }
 
     public function actionUpdateDataTeknisi() {
@@ -1039,19 +1026,11 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->execute();
 
         $response = Yii::$app->getResponse();
-        if ($model > 0) {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => "Data Diubah"
-            ];
-        } else {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "False",
-                "Data1" => "Data Tidak Diubah"
-            ];
-        }
+        $response->setStatusCode(200);
+        return [
+            "Result" => "True",
+            "Data1" => "Data Diubah"
+        ];
     }
     
 
@@ -1085,19 +1064,11 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(':noTask', $val->NoTask)
                 ->execute();
         $response = Yii::$app->getResponse();
-        if ($model > 0) {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => "Data Diubah"
-            ];
-        } else {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "False",
-                "Data1" => "Data Tidak Diubah"
-            ];
-        }
+        $response->setStatusCode(200);
+        return [
+            "Result" => "True",
+            "Data1" => "Data Diubah"
+        ];
     }
 
     public function actionUpdateDataSurvey() {
@@ -1136,19 +1107,11 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->execute();
 
         $response = Yii::$app->getResponse();
-        if ($model > 0) {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => "Data Diubah"
-            ];
-        } else {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "False",
-                "Data1" => "Data Tidak Diubah"
-            ];
-        }
+        $response->setStatusCode(200);
+        return [
+            "Result" => "True",
+            "Data1" => "Data Diubah"
+        ];
     }
 
     public function actionUpdateDataInstalasi() {
@@ -1211,19 +1174,11 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 
 //        \yii\helpers\VarDumper::dump($model);die;
         $response = Yii::$app->getResponse();
-        if ($model > 0) {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => "Data Diubah"
-            ];
-        } else {
-            $response->setStatusCode(200);
-            return [
-                "Result" => "False",
-                "Data1" => "Data Tidak Diubah"
-            ];
-        }
+        $response->setStatusCode(200);
+        return [
+            "Result" => "True",
+            "Data1" => "Data Diubah"
+        ];
     }
 
     protected function findModel($nik, $email) {
