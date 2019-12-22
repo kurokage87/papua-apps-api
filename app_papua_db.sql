@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2019 at 06:41 AM
+-- Generation Time: Dec 22, 2019 at 11:51 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -54,16 +54,16 @@ CREATE TABLE `barang` (
 
 INSERT INTO `barang` (`id`, `task_id`, `nama_barang`, `type`, `SN`, `iplan`, `esnmodem`, `status`, `file_url`, `file_user_create`, `file_date_create`, `description`, `keterangan`, `date_create`, `user_create`, `jenis_barang`, `flag_data_barang`) VALUES
 (5, 1, 'Remote', 'asd', '2a1sd21', '202.134.155', 'asdasd', 'terpasang', NULL, NULL, NULL, 'ASDasdasdasda', 'asdasdas', NULL, NULL, NULL, NULL),
-(9, 5, 'Tv', 'Elektronik', 'asd1a2sd1', '202.134.0.166', 'asdasd', 'rusak', NULL, NULL, NULL, 'asdasd', 'asdasdasd', NULL, NULL, NULL, NULL),
+(9, 1, 'Tv', 'Elektronik', 'asd1a2sd1', '202.134.0.166', 'asdasd', 'rusak', NULL, NULL, NULL, 'asdasd', 'asdasdasd', NULL, NULL, NULL, NULL),
 (10, NULL, 'rest', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (11, NULL, 'rest', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (12, NULL, 'test', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (13, NULL, 'est', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (14, NULL, 'est', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (15, NULL, 'est', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(16, 5, 'test1', 'asdas', '123123123', '202.313.2.23', NULL, 'asdas', 'C:/xampp/htdocs/api/web/upload/Test Aja Sis.jpg', 'asdas', 'asd', 'asdas', 'asdasd', 'asdasd', 'asdas', 'terpasang', 'asdas'),
-(17, 5, 'uu', 'hh', 'kk', 'kk', NULL, 'true', 'C:/xampp/htdocs/api/web/upload/IMG_20191208_085509.jpg.jpg', 'admin', '2019-12-08', 'uu', 'kk', '2019-12-08', 'BRISAT', 'terpasang', 'true'),
-(18, 5, 'uu', 'hh', 'kk', 'kk', NULL, 'terpasang', 'C:/xampp/htdocs/api/web/upload/IMG_20191208_085509.jpg.jpg', 'admin', '2019-12-08', 'uu', 'kk', '2019-12-08', 'BRISAT', 'rusak', 'true');
+(16, 1, 'test1', 'asdas', '123123123', '202.313.2.23', NULL, 'asdas', 'C:/xampp/htdocs/api/web/upload/Test Aja Sis.jpg', 'asdas', 'asd', 'asdas', 'asdasd', 'asdasd', 'asdas', 'terpasang', 'asdas'),
+(17, 1, 'uu', 'hh', 'kk', 'kk', NULL, 'true', 'C:/xampp/htdocs/api/web/upload/IMG_20191208_085509.jpg.jpg', 'admin', '2019-12-08', 'uu', 'kk', '2019-12-08', 'BRISAT', 'terpasang', 'true'),
+(18, 1, 'uu', 'hh', 'kk', 'kk', NULL, 'terpasang', 'C:/xampp/htdocs/api/web/upload/IMG_20191208_085509.jpg.jpg', 'admin', '2019-12-08', 'uu', 'kk', '2019-12-08', 'BRISAT', 'rusak', 'true');
 
 -- --------------------------------------------------------
 
@@ -85,8 +85,8 @@ CREATE TABLE `cost_task` (
 
 INSERT INTO `cost_task` (`id`, `cost`, `keterangan`, `status_cost`, `task_id`) VALUES
 (7, 32321, 'sdfsdf', 'diberikan', 1),
-(8, 12, 'sdfsdf', 'digunakan', 4),
-(9, 32321, 'sdfsdf', 'persetujuan', 4),
+(8, 12, 'sdfsdf', 'digunakan', 1),
+(9, 32321, 'sdfsdf', 'persetujuan', 1),
 (10, 12, 'sdfsdf', 'digunakan', 4);
 
 -- --------------------------------------------------------
@@ -126,8 +126,8 @@ CREATE TABLE `data_teknisi` (
 --
 
 INSERT INTO `data_teknisi` (`id`, `task_id`, `fail_hw`, `sqf`, `initial_esno`, `carrier_to_noice`, `hasil_xpoll`, `cpi`, `operator_satelite`, `operator_helpdesk`, `out_pln`, `out_ups`, `ups_for_backup`, `suhu_ruangan`, `type_mounting`, `panjang_kabel`, `letak_antena`, `letak_modem`, `kondisi_bangunan`, `analisa_problem`, `aktifitas_solusi`, `flag_data_teknis`, `type_teknisi`) VALUES
-(3, 4, '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '4aSDASD', 'alpha'),
-(4, 1, '13', '1313', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', '13', 'finish', 'beta');
+(3, 4, '15', '1313', '13', '13', '13', '13', '13', '13', '13', '13', 'Yes', '13', '13', '13', '13', '13', '13', 'bagus', '13', 'true', 'alpha'),
+(4, 1, '15111', '1313111', '131', '131', '131', '131', '131', '131', '131', '131', 'Yes11', '131', '131', '131', '131', '131', '131', 'bagussss', '131', 'true', 'beta');
 
 -- --------------------------------------------------------
 
@@ -184,8 +184,8 @@ CREATE TABLE `detail_task` (
 --
 
 INSERT INTO `detail_task` (`id`, `task_id`, `id_status_perbaikan`, `flag_data_instalasi`, `diameter_antena`, `polarisasi_arah_antena`, `elevasi_arah_antena`, `azimuth_arah_antena`, `source_listrik`, `kabel_roll`, `perangkat_ke_ups`, `kvaups`, `frequency_band_modulation`, `ip_management`, `receive_symbole_rate`, `phase_netral_pln`, `phase_netral_ups`, `phase_netral_genset`, `phase_ground_pln`, `phase_ground_ups`, `phase_ground_genset`, `netral_ground_pln`, `netral_ground_ups`, `netral_ground_genset`, `satelite_longitude`, `iplan1`, `subnetmask1`, `iplan2`, `subnetmask2`, `hasil_test_alamat1`, `success_test1`, `loss_test1`, `keterangan_test1`, `hasil_test_alamat2`, `success_test2`, `loss_test2`, `keterangan_test2`, `hasil_test_alamat3`, `success_test3`, `loss_test3`, `keterangan_test3`) VALUES
-(3, 1, 1, 'finish', '10', '10', '10', '10', '10', '10', '10', '10', '10', '10.22.24.116', 'X', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '10.2.24.4', '255.255.0.0', '10.23.23.21', '255.0.0.0', 'Sukses bos', 'Sukses bos', 'Gk ada', 'Gk Ada', 'Sukses bos', 'Sukses bos', 'gk ada', 'gk ada', 'Sukses bos', 'Sukses bos', 'gk ada', 'gk ada\r\n'),
-(4, 4, 1, '4rthdfg', '10', '10', '10', '10', '10', '10', '10', '10', '10', '10.22.24.116', 'X', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '10.2.24.4', '255.255.0.0', '10.23.23.21', '255.0.0.0', 'Sukses bos', 'Sukses bos', 'Gk ada', 'Gk Ada', 'Sukses bos', 'Sukses bos', 'gk ada', 'gk ada', 'Sukses bos', 'Sukses bos', 'gk ada', 'gk ada\r\n');
+(3, 1, 1, 'true', '101', '101', '101', '101', 'PLN 1', 'Ya', 'Ya', '10', 'C Band/BPSK', '10.22.24.116', 'X', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '10.2.24.4', '255.255.0.0', '10.23.23.21', '255.0.0.0', 'Sukses bos', 'Sukses bos', 'Gk ada', 'Gk Ada', 'Sukses bos', 'Sukses bos', 'Gk ada', 'gk ada', 'Sukses bos', 'Sukses bos', 'Gk ada', 'gk ada'),
+(4, 4, 1, 'true', '10', '10', '10', '10', 'pln1', 'Ya', 'Ya', '10', 'C Band/BPSK', '10.22.24.116', 'X', '12', '12', '12', '12', '12', '12', '12', '12', '12', '12', '10.2.24.4', '255.255.0.0', '10.23.23.21', '255.0.0.0', 'Sukses bos', 'Sukses bos', 'Gk ada', 'Gk Ada', 'Sukses bos', 'Sukses bos', 'Gk ada', 'gk ada', 'Sukses bos', 'Sukses bos', 'Gk ada', 'gk ada');
 
 -- --------------------------------------------------------
 
@@ -246,7 +246,7 @@ CREATE TABLE `general_info` (
 --
 
 INSERT INTO `general_info` (`id`, `task_id`, `atm_id`, `IPLAN`, `tgl_berangkat`, `tgl_selesai_kerjaan`, `tgl_pulang`, `tgl_status_perbaikan`, `user_update`, `date_update`, `flag_general_info`) VALUES
-(3, 1, 1111, '202.121.22.2', '2019-10-28', '2019-12-01', '2019-12-01', '2019-12-25', 'ADMIN', '2018-09-28', 'finish');
+(3, 1, 1063, '202.121.22.2', '0034-04-11', '0007-06-11', '2019-12-22', '2019-12-22', 'ADMIN', '2018-09-28', 'true');
 
 -- --------------------------------------------------------
 
@@ -344,8 +344,8 @@ CREATE TABLE `lokasi` (
 --
 
 INSERT INTO `lokasi` (`id`, `task_id`, `kanwil`, `kanca_induk`, `alamat_install`, `provinsi`, `kota`, `jarkom_id`, `satelite_id`, `nama_pic`, `no_hp_pic`, `hub`, `latitude`, `longitude`, `alamat_sekarang`, `catatan`, `flag_data_lokasi`, `customer_pic_nama`, `customer_pic_phone`, `laporan_pengaduan`) VALUES
-(3, 1, 'asdf', 'asf', 'alksndalsdnalskd', 'Jabar', 'Depok', 1, 2, '21', 'asdads', 'APT 6', '32132', '312321', 'asdasdasd', 'coba', 'finish', '21', 'asdads', NULL),
-(4, 6, 'asdf', 'asf', 'alksndalsdnalskd', 'Jabar', 'Depok', 2, 2, '21', 'asdads', 'APT 9', '32132', '312321', 'ciracas', 'bagus', '4true', '21', 'asdads', 'asdasd');
+(3, 1, 'Argi', 'asf11', 'depok11', 'Jabar11', 'Depok11', 2, 1, '2111', '11111', 'APT 6', '32132', '312321', 'asdasdasd', 'coba', 'true', '21', 'asdads', NULL),
+(4, 6, 'asdf111', 'asf11', 'depok11', 'Jabar11', 'Depok11', 2, 1, '2111', '11111', 'APT 6', '32132', '312321', 'asdasdasd', 'coba', 'true', '21', 'asdads', 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -503,7 +503,12 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id`, `nama_remote`, `alamat`, `no_task`, `vid`, `tanggal_task`, `provinsi`, `id_jenis_task`, `nama_kordinator`, `user_id`, `status_task`, `status_perbaikan`, `no_stamp`, `date_stamp`, `date_update`, `user_update`, `nama_task`, `sid`, `id_status_kordinator`) VALUES
-(1, 'asdasdasd', 'asdasd', '1', '1', '22-12-2019', 'PApua', 1, 'asdasdasd', 1, 'finsih', 'finish', '12312312', '22-12-2019', NULL, NULL, 'alskdlaksdlaksjdlkasd', NULL, NULL);
+(1, 'depok membara', 'asdasd', '1', '1', '22-12-2019', 'PApua', 1, 'asdasdasd', 1, 'open', 'open', '12312312', '22-12-2019', NULL, NULL, 'alskdlaksdlaksjdlkasd', '1', NULL),
+(2, 'depok membara1', 'asdasd', '2', '2', '22-12-2019', 'PApuayyrty', 1, 'asdasdasd123123', 1, 'open', 'open', '12312312', '22-12-2019', NULL, NULL, 'alskdlaksdlaksjdlkasdvzxzv', '1', NULL),
+(3, 'depok membara1', 'asdasd', '3', '3', '22-12-2019', 'PApua', 1, '123123asdasdasd', 1, 'open', 'open', '12312312', '22-12-2019', NULL, NULL, 'alskdlaksdlaksjdlkasd', '1', NULL),
+(4, 'depok membara1', 'asdasd', '4', '4', '22-12-2019', 'PApuayyrty', 1, 'asdasdasd123123', 1, 'open', 'open', '12312312', '22-12-2019', NULL, NULL, 'alskdlaksdlaksjdlkasdvzxzv', '1', NULL),
+(5, 'depok membara1', 'asdasd', '5', '5', '22-12-2019', 'PApua', 1, 'asdasdasd', 1, 'open', 'open', '12312312', '22-12-2019', NULL, NULL, 'alskdlaksdlaksjdlkasd', '1', NULL),
+(6, 'depok membara1', 'asdasd', '6', '6', '22-12-2019', 'PApua', 1, '123123asdasdasd', 1, 'open', 'open', '12312312', '22-12-2019', NULL, NULL, 'alskdlaksdlaksjdlkasd', '1', NULL);
 
 -- --------------------------------------------------------
 
@@ -531,7 +536,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `level`, `nama`, `nik`) VALUES
-(1, 'admin', 'CU6qlakzdUpZIO4TCpMffTWqfvCzbgne', '$2y$13$miQmzQt80VGf1N8KpjtXgeklCKdmgW7Qpomfnj3xo7M3s34EdleFu', NULL, 'argigarnadi@gmail.com', 10, 1562253658, 1562253658, NULL, 'admin', 'admin');
+(1, 'admin', 'CU6qlakzdUpZIO4TCpMffTWqfvCzbgne', '$2y$13$TW.N8nbTyoYsYSiOyOOoQuuJB9E1PGa8UroE3B.n3/IV/ac4BlotO', NULL, 'y', 10, 1562253658, 1562253658, NULL, 'admin', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -736,7 +741,7 @@ ALTER TABLE `survey`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`
