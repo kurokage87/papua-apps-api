@@ -1064,12 +1064,12 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 //                        . "status_task = '4', status_perbaikan = :statusPerbaikan, "
 //                        . "status_perbaikan = :statusPerbaikan, "
 //                        . "date_stamp = :dateStamp, date_update = :dateUpdate, user_update = :userUpdate WHERE id = :noListTask and no_task = :noTask")
-        $model = Yii::$app->db->createCommand("UPDATE task t, general_info gi, data_teknisi dtk, detail_task dt, lokasi l, survey s SET
+        $model = Yii::$app->db->createCommand("UPDATE task t, general_info gi, data_teknisi dtk, detail_task dt, lokasi l, survey s, foto f SET
                 t.status_task = 'finish', t.status_perbaikan='finish', gi.flag_general_info='finish', dtk.flag_data_teknis='finish', dt.flag_data_instalasi='finish', 
-                l.flag_data_lokasi='finish', s.flag_data_survey='finish', t.vid = :vid, t.date_stamp = :dateStamp, t.date_update = :dateUpdate, 
+                l.flag_data_lokasi='finish', s.flag_data_survey='finish', f.flag_upload_foto='finish', t.vid = :vid, t.date_stamp = :dateStamp, t.date_update = :dateUpdate, 
                 t.user_update =:userUpdate
                 WHERE t.id = :noListTask and t.no_task=:noTask and gi.task_id=:noListTask and dtk.task_id=:noListTask and dt.task_id=:noListTask and 
-                l.task_id=:noListTask AND s.task_id=:noListTask")
+                l.task_id=:noListTask AND s.task_id=:noListTask and f.task_id=:noListTask")
                 ->bindValue(":noListTask", $val->NoListTask)
                 ->bindValue(":vid", $val->VID)
                 ->bindValue(":statusPerbaikan", $val->IdStatusPerbaikan)
@@ -1272,7 +1272,7 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
         $email = \Yii::$app->mailer->compose()
                 ->setTo($email)
                 ->setFrom([\Yii::$app->params['adminEmail'] => 'Papuan service robot'])
-                ->setTextBody('Dear user ' . $model->nama . ' Lupa Password telah berhasil, saat ini password anda adalah "' . $defaultPass . '"<br> Regards   papuan')
+                ->setTextBody('Dear user ' . $model->nama . ' Lupa Password telah berhasil, saat ini password anda adalah "' . $defaultPass . '" Regards   papuan')
                 ->setSubject('Forgot Password')
                 ->send();
         $respon = Yii::$app->getResponse();
