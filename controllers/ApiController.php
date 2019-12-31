@@ -206,7 +206,7 @@ class ApiController extends Controller {
             $model->keterangan = $val->Keterangan;
             $model->flag_data_barang = "true";
             $model->jenis_barang = 'terpasang';
-            
+
 
             $model->save();
             if ($model->save()) {
@@ -266,7 +266,7 @@ class ApiController extends Controller {
             $model->flag_upload_foto = $val->FlagUploadPhoto;
             $model->your_image_64_file = $val->YourImage64File;
             $model->your_image_64_name = $name;
-            
+
 
             $model->save();
             if ($model->save()) {
@@ -289,7 +289,6 @@ class ApiController extends Controller {
                 "Data1" => 'VID atau NoTask tidak ditemukan'
             ];
         }
-        
     }
 
     public function actionInsertBarangRusak() {
@@ -332,26 +331,26 @@ class ApiController extends Controller {
             $model->description = $val->Description;
             $model->keterangan = $val->Keterangan;
             $model->flag_data_barang = "true";
-        $model->jenis_barang = 'rusak';
+            $model->jenis_barang = 'rusak';
 
 //        Send input to database
 
-        $model->save();
+            $model->save();
 
-        $respon = \Yii::$app->getResponse();
-        if ($model->save()) {
-            $respon->setStatusCode(200);
-            return [
-                "Result" => "True",
-                "Data1" => 'Data Berhasil Di input'
-            ];
-        } else {
-            $respon->setStatusCode(200);
-            return [
-                "Result" => "False",
-                "Data1" => 'Data Gagal Di input'
-            ];
-        }
+            $respon = \Yii::$app->getResponse();
+            if ($model->save()) {
+                $respon->setStatusCode(200);
+                return [
+                    "Result" => "True",
+                    "Data1" => 'Data Berhasil Di input'
+                ];
+            } else {
+                $respon->setStatusCode(200);
+                return [
+                    "Result" => "False",
+                    "Data1" => 'Data Gagal Di input'
+                ];
+            }
         }
     }
 
@@ -946,13 +945,12 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->execute();
 
         $response = Yii::$app->getResponse();
-        
+
         $response->setStatusCode(200);
         return [
             "Result" => "True",
             "Data1" => "Data Diubah"
         ];
-        
     }
 
     public function actionUpdateDataLokasi() {
@@ -984,8 +982,8 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
                 ->bindValue(":alamatInstall", $val1->ALAMAT)
                 ->bindValue(":provinsi", $val1->PROVINSI)
                 ->bindValue(":kota", $val1->KOTA)
-                ->bindValue(":idJarkom", (int)$val1->IdJarkom)
-                ->bindValue(":idSatelite", (int)$val1->IdSatelite)
+                ->bindValue(":idJarkom", (int) $val1->IdJarkom)
+                ->bindValue(":idSatelite", (int) $val1->IdSatelite)
                 ->bindValue(":namaPic", $val1->PIC)
                 ->bindValue(":noHpPic", $val1->NoHpPic)
                 ->bindValue(":hub", $val1->Hub)
@@ -1048,7 +1046,6 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
             "Data1" => "Data Diubah"
         ];
     }
-    
 
     public function actionUpdateDataTask() {
         $data = Yii::$app->getRequest()->getRawBody();
@@ -1056,7 +1053,6 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 //        \yii\helpers\VarDumper::dump($jsonDec);die;
 //        $val1 = $jsonDec->Raw[0]->PARAM1[0];
 //        $val2 = $jsonDec->Raw[0]->PARAM2[0];
-
 //        var_dump($val2);die;
 //        UPDATE task t, general_info gi, data_teknisi dtk, detail_task dt, lokasi l, survey s SET t.status_task = 'finish', t.status_perbaikan='finish', gi.flag_general_info='4',dtk.flag_data_teknis='4', dt.flag_data_instalasi='4', l.flag_data_lokasi='4', s.flag_data_survey='4' 
 //WHERE t.id = '5' and t.no_task='5'
@@ -1064,9 +1060,9 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
 //                        . "status_task = '4', status_perbaikan = :statusPerbaikan, "
 //                        . "status_perbaikan = :statusPerbaikan, "
 //                        . "date_stamp = :dateStamp, date_update = :dateUpdate, user_update = :userUpdate WHERE id = :noListTask and no_task = :noTask")
-        $model = Yii::$app->db->createCommand("UPDATE task t, general_info gi, data_teknisi dtk, detail_task dt, lokasi l, survey s, foto f SET
+        $model = Yii::$app->db->createCommand("UPDATE task t, general_info gi, data_teknisi dtk, detail_task dt, lokasi l, survey s, foto f, barang b SET
                 t.status_task = 'finish', t.status_perbaikan='finish', gi.flag_general_info='finish', dtk.flag_data_teknis='finish', dt.flag_data_instalasi='finish', 
-                l.flag_data_lokasi='finish', s.flag_data_survey='finish', f.flag_upload_foto='finish', t.vid = :vid, t.date_stamp = :dateStamp, t.date_update = :dateUpdate, 
+                l.flag_data_lokasi='finish', s.flag_data_survey='finish', f.flag_upload_foto='finish', b.flag_data_barang='finish', t.vid = :vid, t.date_stamp = :dateStamp, t.date_update = :dateUpdate, 
                 t.user_update =:userUpdate
                 WHERE t.id = :noListTask and t.no_task=:noTask and gi.task_id=:noListTask and dtk.task_id=:noListTask and dt.task_id=:noListTask and 
                 l.task_id=:noListTask AND s.task_id=:noListTask and f.task_id=:noListTask")
@@ -1267,27 +1263,36 @@ WHERE u.nik = '" . $nik . "'")->queryAll();
     public function actionForgetPassword($email) {
         $model = $model = \app\models\Users::findOne(['email' => $email]);
 //       \yii\helpers\VarDumper::dump($model);die;
-        $defaultPass = "papua123";
-        $model->password_hash = \Yii::$app->getSecurity()->generatePasswordHash($defaultPass);
-        $email = \Yii::$app->mailer->compose()
-                ->setTo($email)
-                ->setFrom([\Yii::$app->params['adminEmail'] => 'Papuan service robot'])
-                ->setTextBody('Dear user ' . $model->nama . ' Lupa Password telah berhasil, saat ini password anda adalah "' . $defaultPass . '" Regards   papuan')
-                ->setSubject('Forgot Password')
-                ->send();
         $respon = Yii::$app->getResponse();
-        if ($model->save() && $email) {
-            $respon->setStatusCode(200);
-            return [
-                'Result' => "True",
-                'Data1' => 'Password Berhasil Diubah'
-            ];
-        } else {
+        if ($model == null) {
             $respon->setStatusCode(200);
             return [
                 'Result' => "False",
-                'Data1' => 'Password Gagal Diubah'
+                'Data1' => "Email tidak ditemukan"
             ];
+        } else {
+            $defaultPass = "papua123";
+            $model->password_hash = \Yii::$app->getSecurity()->generatePasswordHash($defaultPass);
+
+            if ($model->save()) {
+                $respon->setStatusCode(200);
+                $email = \Yii::$app->mailer->compose()
+                        ->setTo($email)
+                        ->setFrom([\Yii::$app->params['adminEmail'] => 'Papuan service robot'])
+                        ->setTextBody('Dear user ' . $model->nama . ' Lupa Password telah berhasil, saat ini password anda adalah ' . $defaultPass)
+                        ->setSubject('Forgot Password')
+                        ->send();
+                return [
+                    'Result' => "True",
+                    'Data1' => 'Password Berhasil Diubah'
+                ];
+            } else {
+                $respon->setStatusCode(200);
+                return [
+                    'Result' => "False",
+                    'Data1' => 'Password Gagal Diubah'
+                ];
+            }
         }
     }
 
